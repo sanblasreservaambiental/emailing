@@ -195,29 +195,51 @@ for lang, d in DATA.items():
             'reviewCta': 'What did you think? Share your experience',
         },
     }[lang]
-    language_links = ' · '.join(f'<a style="color:#574c43;line-height:2" lang="{code}" href="{hotel_url(code)}">{e(v["name"])}</a>' for code,v in DATA.items())
+    language_links = ' · '.join(f'<a style="font-family:Georgia,serif;font-size:13px;line-height:26px;color:#574c43;text-decoration:underline;" lang="{code}" href="{hotel_url(code)}">{e(v["name"])}</a>' for code,v in DATA.items())
     language_text = '\n'.join(f'{v["name"]}: {hotel_url(code)}' for code,v in DATA.items())
     email_url = 'https://emailing.sanblasreservaambiental.org/hotel/correo/' + lang + '.html'
-    # Breve presentación y ficha enlazada, con tablas y estilos en línea para correo.
-    email_html = f'''<!doctype html><html lang="{lang}"><head><meta charset="utf-8"><meta name="robots" content="noindex, nofollow, noarchive"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{e(email_copy['heading'])}</title>{FONTS}{social_meta(d,lang,email_url)}</head>
-<body style="margin:0;background:#faf8f3;color:#1a1614;font:16px/1.6 Arial,Helvetica,sans-serif">
-<div style="display:none;max-height:0;overflow:hidden;mso-hide:all">{e(d['offer'])} {e(d['limited'])}</div>
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="padding:20px 8px">
-<!--[if mso]><table role="presentation" width="600"><tr><td><![endif]-->
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px">
-<tr><td style="padding:0 0 16px;font-size:13px"><a href="{email_url}" style="color:#574c43">{e(d['browser'])}</a></td></tr>
-<tr><td><p>{e(d['greeting'])}</p><h1 style="font:700 26px/1.25 Arial,sans-serif">{e(email_copy['heading'])}</h1><p>{e(email_copy['intro'])}</p><p style="background:#eee3c9;padding:16px;margin:20px 0 8px;font-weight:bold">{e(d['offer'])}<br><a href="{hotel_url(lang)}#discount-note" style="font-size:12px;font-weight:normal;color:#574c43">{e(d['offerNote'])}</a></p><p><b>{e(d['limited'])}</b></p><p><b>{e(email_copy['fullTitle'])}</b><br>{e(email_copy['full'])}</p><p><b>{e(email_copy['insideTitle'])}</b><br>{e(email_copy['inside'])}</p></td></tr>
-<tr><td style="padding:8px 0 16px">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #d8ccb4;background:#ffffff">
-<tr><td><a href="{hotel_url(lang)}"><img src="{SHARE_IMAGE}" alt="{e(d['heroAlt'])}" width="600" height="315" style="display:block;border:0;width:100%;max-width:600px;height:auto"></a></td></tr>
-<tr><td style="padding:22px"><p style="margin:0 0 8px;color:#574c43;font-size:12px">San Blas Reserva Ambiental · Barceló Tenerife</p><h2 style="margin:0 0 10px;font:700 23px/1.3 Arial,sans-serif">{e(email_copy['cardTitle'])}</h2><p style="margin:0 0 18px">{e(email_copy['cardText'])}</p>
-<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td bgcolor="#eee3c9" style="padding:12px 20px;border-radius:24px"><a href="{hotel_url(lang)}" style="font:bold 16px Arial,sans-serif;color:#1a1614;text-decoration:none">{e(email_copy['cta'])} →</a></td></tr></table>
+    # Tablas, tipografía explícita y alternativa VML para Outlook clásico/Word.
+    text_style = "font-family:'Source Serif 4',Georgia,'Times New Roman',serif;font-size:16px;line-height:26px;color:#1a1614;"
+    heading_style = "font-family:K2D,Arial,Helvetica,sans-serif;color:#1a1614;"
+    email_html = f'''<!doctype html>
+<html lang="{lang}" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head>
+<meta charset="utf-8"><meta name="robots" content="noindex, nofollow, noarchive"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="x-apple-disable-message-reformatting">
+<title>{e(email_copy['heading'])}</title>
+<!--[if !mso]><!-->{FONTS}<!--<![endif]-->
+<!--[if mso]><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml>
+<style type="text/css">table{{border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;}}td,p,a{{font-family:Georgia,'Times New Roman',serif;}}h1,h2,.email-heading{{font-family:Arial,Helvetica,sans-serif !important;}}.email-stars{{font-family:'Segoe UI Symbol',Arial,sans-serif !important;}}</style><![endif]-->
+{social_meta(d,lang,email_url)}</head>
+<body bgcolor="#faf8f3" style="margin:0;padding:0;background-color:#faf8f3;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
+<div style="display:none;font-size:1px;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;mso-hide:all;">{e(d['offer'])} {e(d['limited'])}</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#faf8f3" style="width:100%;border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;"><tr><td align="center" valign="top" style="padding:20px 8px;">
+<!--[if mso]><table role="presentation" width="600" align="center" cellpadding="0" cellspacing="0" border="0"><tr><td width="600" valign="top"><![endif]-->
+<table role="presentation" width="100%" align="center" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+<tr><td style="padding:0 0 16px;{text_style}font-size:13px;line-height:20px;"><a href="{email_url}" style="font-family:Georgia,serif;font-size:13px;line-height:20px;color:#574c43;text-decoration:underline;">{e(d['browser'])}</a></td></tr>
+<tr><td style="padding:0 0 16px;{text_style}">{e(d['greeting'])}</td></tr>
+<tr><td style="padding:0 0 16px;"><h1 class="email-heading" style="margin:0;{heading_style}font-size:26px;line-height:34px;font-weight:700;mso-line-height-rule:at-least;">{e(email_copy['heading'])}</h1></td></tr>
+<tr><td style="padding:0 0 20px;{text_style}">{e(email_copy['intro'])}</td></tr>
+<tr><td bgcolor="#eee3c9" style="padding:16px;{text_style}background-color:#eee3c9;"><strong>{e(d['offer'])}</strong><br><a href="{hotel_url(lang)}#discount-note" style="font-family:Georgia,serif;font-size:12px;line-height:20px;font-weight:normal;color:#574c43;text-decoration:underline;">{e(d['offerNote'])}</a></td></tr>
+<tr><td style="padding:16px 0;{text_style}"><strong>{e(d['limited'])}</strong></td></tr>
+<tr><td style="padding:0 0 16px;{text_style}"><strong>{e(email_copy['fullTitle'])}</strong><br>{e(email_copy['full'])}</td></tr>
+<tr><td style="padding:0 0 24px;{text_style}"><strong>{e(email_copy['insideTitle'])}</strong><br>{e(email_copy['inside'])}</td></tr>
+<tr><td style="padding:0 0 20px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="width:100%;border-collapse:collapse;background-color:#ffffff;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+<tr><td style="padding:0;font-size:0;line-height:0;"><a href="{hotel_url(lang)}" style="text-decoration:none;"><img src="{SHARE_IMAGE}" alt="{e(d['heroAlt'])}" width="600" height="315" border="0" style="display:block;border:0;outline:none;text-decoration:none;width:100%;max-width:600px;height:auto;-ms-interpolation-mode:bicubic;"></a></td></tr>
+<tr><td style="padding:22px 22px 8px;{text_style}font-size:12px;line-height:18px;color:#574c43;">San Blas Reserva Ambiental · Barceló Tenerife</td></tr>
+<tr><td style="padding:0 22px 10px;"><h2 class="email-heading" style="margin:0;{heading_style}font-size:23px;line-height:30px;font-weight:700;mso-line-height-rule:at-least;">{e(email_copy['cardTitle'])}</h2></td></tr>
+<tr><td style="padding:0 22px 18px;{text_style}">{e(email_copy['cardText'])}</td></tr>
+<tr><td align="left" style="padding:0 22px 22px;">
+<!--[if mso]><v:roundrect href="{hotel_url(lang)}" style="height:50px;v-text-anchor:middle;width:310px;" arcsize="96%" strokecolor="#eee3c9" fillcolor="#eee3c9"><w:anchorlock xmlns:w="urn:schemas-microsoft-com:office:word"/><center style="font-family:Arial,Helvetica,sans-serif;font-size:16px;font-weight:bold;color:#1a1614;">{e(email_copy['cta'])} →</center></v:roundrect><![endif]-->
+<!--[if !mso]><!--><table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;"><tr><td align="center" bgcolor="#eee3c9" style="background-color:#eee3c9;border-radius:24px;"><a href="{hotel_url(lang)}" class="email-heading" style="display:inline-block;border:1px solid #eee3c9;border-radius:24px;padding:12px 20px;{heading_style}font-size:16px;line-height:24px;font-weight:700;text-decoration:none;">{e(email_copy['cta'])} →</a></td></tr></table><!--<![endif]-->
 </td></tr></table></td></tr>
-<tr><td><p style="font-size:13px"><b>{e(email_copy['languages'])}</b><br>{language_links}</p><p>{e(d['signoff'])}<br><b>San Blas Reserva Ambiental · Barceló Tenerife</b><br><a href="mailto:{ADDRESS}" style="color:#574c43">{ADDRESS}</a><br><a href="https://wa.me/34922097040" style="color:#574c43">WhatsApp: +34 922 097 040</a></p><p style="border-top:1px solid #d8ccb4;padding-top:16px;font-size:15px"><b>{e(email_copy['reviewHeading'])}</b><br>{e(email_copy['reviewCta'])}<br><a href="{REVIEW_URL}" aria-label="{e(email_copy['reviewCta'])}" title="{e(email_copy['reviewCta'])}" style="display:inline-block;padding:8px 0;color:#9a640c;font:30px/1.5 Arial,sans-serif;letter-spacing:4px;text-decoration:none">★★★★★</a></p><p style="font-size:12px"><a href="mailto:{ADDRESS}?subject=BAJA" style="color:#574c43">{e(d['unsubscribe'])}</a></p></td></tr>
+<tr><td style="padding:0 0 20px;{text_style}font-size:13px;line-height:24px;"><strong>{e(email_copy['languages'])}</strong><br>{language_links}</td></tr>
+<tr><td style="padding:0 0 20px;{text_style}">{e(d['signoff'])}<br><strong>San Blas Reserva Ambiental · Barceló Tenerife</strong><br><a href="mailto:{ADDRESS}" style="font-family:Georgia,serif;font-size:16px;line-height:26px;color:#574c43;text-decoration:underline;">{ADDRESS}</a><br><a href="https://wa.me/34922097040" style="font-family:Georgia,serif;font-size:16px;line-height:26px;color:#574c43;text-decoration:underline;">WhatsApp: +34 922 097 040</a></td></tr>
+<tr><td style="border-top:1px solid #d8ccb4;padding:16px 0 0;{text_style}font-size:15px;line-height:24px;"><strong>{e(email_copy['reviewHeading'])}</strong><br>{e(email_copy['reviewCta'])}</td></tr>
+<tr><td style="padding:8px 0 16px;"><a href="{REVIEW_URL}" class="email-stars" aria-label="{e(email_copy['reviewCta'])}" title="{e(email_copy['reviewCta'])}" style="font-family:'Segoe UI Symbol','Arial Unicode MS',Arial,sans-serif;font-size:30px;line-height:45px;color:#9a640c;letter-spacing:4px;text-decoration:none;">★★★★★</a></td></tr>
+<tr><td style="padding:0 0 16px;{text_style}font-size:12px;line-height:18px;"><a href="mailto:{ADDRESS}?subject=BAJA" style="font-family:Georgia,serif;font-size:12px;line-height:18px;color:#574c43;text-decoration:underline;">{e(d['unsubscribe'])}</a></td></tr>
 </table><!--[if mso]></td></tr></table><![endif]--></td></tr></table></body></html>'''
     plain = '\n\n'.join([d['greeting'], email_copy['heading'], email_copy['intro'], d['offer'], d['offerNote']+' '+hotel_url(lang)+'#discount-note', d['limited'], email_copy['fullTitle'], email_copy['full'], email_copy['insideTitle'], email_copy['inside'], email_copy['cardText'], email_copy['cta']+': '+hotel_url(lang), email_copy['languages'], language_text, d['signoff'], 'San Blas Reserva Ambiental · Barceló Tenerife', ADDRESS, 'WhatsApp: +34 922 097 040 · https://wa.me/34922097040', email_copy['reviewHeading'], email_copy['reviewCta']+'\n★★★★★ '+REVIEW_URL, d['unsubscribe']])
-    # Fuentes de marca con alternativas para clientes sin fuentes web.
-    email_html = email_html.replace('Arial,Helvetica,sans-serif', "'Source Serif 4',Georgia,serif").replace('Arial,sans-serif', 'K2D,Arial,sans-serif').replace('K2D,K2D,', 'K2D,')
     stem = EMAIL_OUT / lang
     stem.with_suffix('.html').write_text(email_html, encoding='utf-8')
     stem.with_suffix('.txt').write_text(plain, encoding='utf-8')
