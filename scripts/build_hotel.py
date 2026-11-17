@@ -115,7 +115,7 @@ for lang, d in DATA.items():
 <p>{e(d[key+'Text'])}</p><p class="note">{e(d[key+'Note'])}</p>
 {booking(d,key)}</div></article>'''
     page = f'''<!doctype html>
-<html lang="{lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<html lang="{lang}"><head><meta name="robots" content="noindex, nofollow, noarchive"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{e(d['title'])} · San Blas Reserva Ambiental</title><meta name="description" content="{e(d['intro'])}">
 <link rel="canonical" href="{BASE}{name}">{alternates}
 <link rel="icon" type="image/png" href="../../assets/img/logo-reserva.png">{FONTS}<link rel="stylesheet" href="hotel.css">
@@ -140,7 +140,7 @@ for lang, d in DATA.items():
     blocks = ''
     for key in ('full', 'inside'):
         blocks += f'<tr><td style="padding:26px 28px;border-top:1px solid #d8ccb4"><p style="color:#a8492a;font:bold 12px Arial,sans-serif">{e(d[key+"Tag"])}</p><h2 style="font:700 24px Arial,sans-serif;color:#1a1614">{e(d[key])}</h2>{price(d,key,True)}<p><b>{e(d[key+"Schedule"])}</b><br>{e(d['durationLabel'])}: {e(d[key+'Duration'])}<br>{e(d["limited"])}</p><p>{e(d[key+"Text"])}</p><p>{e(d[key+"Note"])}</p>{booking(d,key,True)}</td></tr>'
-    email_html = f'''<!doctype html><html lang="{lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>{e(d['subject'])}</title>{FONTS}</head>
+    email_html = f'''<!doctype html><html lang="{lang}"><head><meta name="robots" content="noindex, nofollow, noarchive"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>{e(d['subject'])}</title>{FONTS}</head>
 <body style="margin:0;background:#faf8f3;color:#1a1614;font:16px/1.6 Arial,Helvetica,sans-serif">
 <div style="display:none;max-height:0;overflow:hidden;mso-hide:all">{e(d['offer'])} {e(d['limited'])}</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="padding:20px 8px">
@@ -174,5 +174,5 @@ for lang, d in DATA.items():
 # Entradas existentes: acceso directo al contenido actual, sin redirección externa.
 for path, prefix in [(ROOT/'index.html','mailing/emails/'),(ROOT/'mailing'/'index.html','emails/'),(OUT/'index.html','')]:
     assets = {ROOT: 'assets/img/', ROOT/'mailing': '../assets/img/', OUT: '../../assets/img/'}[path.parent]
-    path.write_text('<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>San Blas · Visitas para huéspedes</title>'+FONTS+'<link rel="icon" type="image/png" href="'+assets+'logo-reserva.png"><link rel="stylesheet" href="'+prefix+'hotel.css"></head><body><main class="wrap" style="padding-top:60px"><img src="'+assets+'logo-reserva.png" width="160" height="143" alt="San Blas Reserva Ambiental · Tenerife"><p class="kicker">San Blas Reserva Ambiental · Barceló Tenerife</p><h1>Leer Canarias en un paisaje</h1><p>'+e(DATA['es']['offer'])+'</p><p>'+e(DATA['es']['limited'])+'</p><nav class="language-menu" aria-label="Idiomas">'+''.join(f'<a class="button" lang="{code}" hreflang="{code}" href="{prefix}intern_email_2.0_{code}.html">{e(v["name"])}</a>' for code,v in DATA.items())+'</nav></main></body></html>',encoding='utf-8')
+    path.write_text('<!doctype html><html lang="es"><head><meta name="robots" content="noindex, nofollow, noarchive"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>San Blas · Visitas para huéspedes</title>'+FONTS+'<link rel="icon" type="image/png" href="'+assets+'logo-reserva.png"><link rel="stylesheet" href="'+prefix+'hotel.css"></head><body><main class="wrap" style="padding-top:60px"><img src="'+assets+'logo-reserva.png" width="160" height="143" alt="San Blas Reserva Ambiental · Tenerife"><p class="kicker">San Blas Reserva Ambiental · Barceló Tenerife</p><h1>Leer Canarias en un paisaje</h1><p>'+e(DATA['es']['offer'])+'</p><p>'+e(DATA['es']['limited'])+'</p><nav class="language-menu" aria-label="Idiomas">'+''.join(f'<a class="button" lang="{code}" hreflang="{code}" href="{prefix}intern_email_2.0_{code}.html">{e(v["name"])}</a>' for code,v in DATA.items())+'</nav></main></body></html>',encoding='utf-8')
 print(f'Generadas {len(DATA)} páginas online, 2 correos HTML/TXT/EML y 3 entradas de navegación.')

@@ -1,0 +1,8 @@
+# HTML must remain crawlable so search engines can read noindex, nofollow.
+User-agent: *
+Disallow: /assets/
+Disallow: /scripts/
+Disallow: /docs/
+Disallow: /*.json$
+Disallow: /*.txt$
+Disallow: /*.eml$

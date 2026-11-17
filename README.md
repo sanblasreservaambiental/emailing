@@ -80,3 +80,7 @@ Comprobado en Chrome con 320 y 390 px, texto al 200 %, colores forzados, datos c
 Instrucciones abreviadas en los ocho idiomas, explicación del mensaje en inglés y opción de volver a editar conservando los datos. El envío mantiene dos opciones; copiar queda como alternativa secundaria. Iconos SVG coherentes en la web y estructura independiente compatible con correo en las plantillas. Imagen principal adaptable a la anchura de pantalla.
 
 El calendario se monta fuera del desplegable para evitar recortes; en móvil aparece dentro de la pantalla y en escritorio se coloca junto al campo. Comprobado también en horizontal de 844 × 390 px.
+
+## Exclusión de buscadores
+
+Todas las páginas HTML incluyen `noindex, nofollow, noarchive`, también las generadas y las plantillas antiguas. `robots.txt` bloquea recursos y archivos auxiliares; permite leer el HTML para que los buscadores puedan aplicar `noindex`. No sustituye un control de acceso.
