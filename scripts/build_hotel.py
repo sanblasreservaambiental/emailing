@@ -31,6 +31,7 @@ FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="p
 EXPERIENCES = {key: 'https://www.barcelo.com/guia-turismo/es/espana/tenerife/actividades/' + code + '/'
                for key, code in [('full', '1121'), ('inside', '104')]}
 
+REVIEW_URL = 'https://app.fastreview.pro/home/A5q3G8kVo1eM6Zr'
 SHARE_IMAGE = 'https://emailing.sanblasreservaambiental.org/assets/img/hotel-compartir.jpg'
 LOCALES = {'es':'es_ES','en':'en_GB','fr':'fr_FR','de':'de_DE','nl':'nl_NL','ru':'ru_RU','it':'it_IT','pl':'pl_PL'}
 
@@ -172,6 +173,8 @@ for lang, d in DATA.items():
             'cardText': 'Conozca las dos modalidades y consulte horarios, disponibilidad y opciones de reserva en la ficha de la actividad.',
             'cta': 'Ver la actividad y reservar',
             'languages': 'La ficha está disponible en ocho idiomas',
+            'reviewHeading': '¿Ya nos visitaste?',
+            'reviewCta': '¿Qué te pareció? Cuéntanos tu experiencia',
         },
         'en': {
             'heading': 'Discover the San Blas Environmental Reserve',
@@ -182,6 +185,8 @@ for lang, d in DATA.items():
             'cardText': 'Explore both options and check schedules, availability and booking options on the activity page.',
             'cta': 'Explore the activity and book',
             'languages': 'The activity page is available in eight languages',
+            'reviewHeading': 'Have you already visited us?',
+            'reviewCta': 'What did you think? Share your experience',
         },
     }[lang]
     language_links = ' · '.join(f'<a style="color:#574c43;line-height:2" lang="{code}" href="{hotel_url(code)}">{e(v["name"])}</a>' for code,v in DATA.items())
@@ -202,9 +207,9 @@ for lang, d in DATA.items():
 <tr><td style="padding:22px"><p style="margin:0 0 8px;color:#574c43;font-size:12px">San Blas Reserva Ambiental · Barceló Tenerife</p><h2 style="margin:0 0 10px;font:700 23px/1.3 Arial,sans-serif">{e(email_copy['cardTitle'])}</h2><p style="margin:0 0 18px">{e(email_copy['cardText'])}</p>
 <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td bgcolor="#eee3c9" style="padding:12px 20px;border-radius:24px"><a href="{hotel_url(lang)}" style="font:bold 16px Arial,sans-serif;color:#1a1614;text-decoration:none">{e(email_copy['cta'])} →</a></td></tr></table>
 </td></tr></table></td></tr>
-<tr><td><p style="font-size:13px"><b>{e(email_copy['languages'])}</b><br>{language_links}</p><p>{e(d['signoff'])}<br><b>San Blas Reserva Ambiental · Barceló Tenerife</b><br><a href="mailto:{ADDRESS}" style="color:#574c43">{ADDRESS}</a></p><p style="font-size:12px"><a href="mailto:{ADDRESS}?subject=BAJA" style="color:#574c43">{e(d['unsubscribe'])}</a></p></td></tr>
+<tr><td><p style="font-size:13px"><b>{e(email_copy['languages'])}</b><br>{language_links}</p><p>{e(d['signoff'])}<br><b>San Blas Reserva Ambiental · Barceló Tenerife</b><br><a href="mailto:{ADDRESS}" style="color:#574c43">{ADDRESS}</a></p><p style="border-top:1px solid #d8ccb4;padding-top:16px;font-size:15px"><b>{e(email_copy['reviewHeading'])}</b><br><a href="{REVIEW_URL}" style="color:#574c43">{e(email_copy['reviewCta'])} →</a></p><p style="font-size:12px"><a href="mailto:{ADDRESS}?subject=BAJA" style="color:#574c43">{e(d['unsubscribe'])}</a></p></td></tr>
 </table><!--[if mso]></td></tr></table><![endif]--></td></tr></table></body></html>'''
-    plain = '\n\n'.join([d['greeting'], email_copy['heading'], email_copy['intro'], email_copy['full'], email_copy['inside'], email_copy['cardText'], email_copy['cta']+': '+hotel_url(lang), email_copy['languages'], language_text, d['signoff'], 'San Blas Reserva Ambiental · Barceló Tenerife', ADDRESS, d['unsubscribe']])
+    plain = '\n\n'.join([d['greeting'], email_copy['heading'], email_copy['intro'], email_copy['full'], email_copy['inside'], email_copy['cardText'], email_copy['cta']+': '+hotel_url(lang), email_copy['languages'], language_text, d['signoff'], 'San Blas Reserva Ambiental · Barceló Tenerife', ADDRESS, email_copy['reviewHeading'], email_copy['reviewCta']+': '+REVIEW_URL, d['unsubscribe']])
     # Fuentes de marca con alternativas para clientes sin fuentes web.
     email_html = email_html.replace('Arial,Helvetica,sans-serif', "'Source Serif 4',Georgia,serif").replace('Arial,sans-serif', 'K2D,Arial,sans-serif').replace('K2D,K2D,', 'K2D,')
     stem = OUT / f'correo-huespedes-{lang}'
