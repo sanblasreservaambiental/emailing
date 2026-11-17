@@ -171,8 +171,8 @@ for lang, d in DATA.items():
     msg.add_alternative(email_html, subtype='html')
     stem.with_suffix('.eml').write_bytes(msg.as_bytes())
 
-# Entradas existentes: acceso directo al contenido actual, sin redirección externa.
-for path, prefix in [(ROOT/'index.html','mailing/emails/'),(ROOT/'mailing'/'index.html','emails/'),(OUT/'index.html','')]:
-    assets = {ROOT: 'assets/img/', ROOT/'mailing': '../assets/img/', OUT: '../../assets/img/'}[path.parent]
-    path.write_text('<!doctype html><html lang="es"><head><meta name="robots" content="noindex, nofollow, noarchive"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>San Blas · Visitas para huéspedes</title>'+FONTS+'<link rel="icon" type="image/png" href="'+assets+'logo-reserva.png"><link rel="stylesheet" href="'+prefix+'hotel.css"></head><body><main class="wrap" style="padding-top:60px"><img src="'+assets+'logo-reserva.png" width="160" height="143" alt="San Blas Reserva Ambiental · Tenerife"><p class="kicker">San Blas Reserva Ambiental · Barceló Tenerife</p><h1>Leer Canarias en un paisaje</h1><p>'+e(DATA['es']['offer'])+'</p><p>'+e(DATA['es']['limited'])+'</p><nav class="language-menu" aria-label="Idiomas">'+''.join(f'<a class="button" lang="{code}" hreflang="{code}" href="{prefix}intern_email_2.0_{code}.html">{e(v["name"])}</a>' for code,v in DATA.items())+'</nav></main></body></html>',encoding='utf-8')
-print(f'Generadas {len(DATA)} páginas online, 2 correos HTML/TXT/EML y 3 entradas de navegación.')
+# Índices deliberadamente vacíos; las páginas de idioma conservan su URL directa.
+blank_index = '<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="robots" content="noindex, nofollow, noarchive"><title></title></head><body></body></html>\n'
+for path in (ROOT/'index.html', ROOT/'mailing'/'index.html', OUT/'index.html'):
+    path.write_text(blank_index, encoding='utf-8')
+print(f'Generadas {len(DATA)} páginas online, 2 correos HTML/TXT/EML y 3 índices vacíos.')

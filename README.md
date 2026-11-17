@@ -84,3 +84,7 @@ El calendario se monta fuera del desplegable para evitar recortes; en móvil apa
 ## Exclusión de buscadores
 
 Todas las páginas HTML incluyen `noindex, nofollow, noarchive`, también las generadas y las plantillas antiguas. `robots.txt` bloquea recursos y archivos auxiliares; permite leer el HTML para que los buscadores puedan aplicar `noindex`. No sustituye un control de acceso.
+
+## Índices vacíos
+
+Los índices de `/`, `/mailing/` y `/mailing/emails/` no muestran contenido ni enlaces. Las ocho páginas de idioma permanecen en `/mailing/emails/intern_email_2.0_{idioma}.html`, accesibles por enlace directo y con exclusión de buscadores. El generador conserva los índices vacíos.
