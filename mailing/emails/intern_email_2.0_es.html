@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>San Blas Reserva Ambiental</title>
         <link rel="icon" href="img/logo-negro.png">
-        <link href="https://fonts.googleapis.com/css2?family=K2D:wght@500;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=K2D:wght@400;500;700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
         <style>
             :root{
                 --primary:#1f4d4a;
@@ -21,7 +21,7 @@
             }
             
             body{
-                font-family:'Lato',sans-serif;
+                font-family:'Source Serif 4',serif;
                 color:#333;
                 line-height:1.7;
                 background:#fff;
@@ -44,14 +44,19 @@
                 content:"";
                 position:absolute;
                 inset:0;
-                background:rgba(0,0,0,.20);
+                    background:linear-gradient(
+                        90deg,
+                        rgba(0,0,0,.38) 0%,
+                        rgba(0,0,0,.18) 45%,
+                        rgba(0,0,0,.05) 100%
+                    );
             }
             
             .hero-content{
                 position:relative;
-                max-width:780px;
-                margin-left:10%;
-                padding:60px 30px;
+                max-width:760px;
+                margin-left:8%;
+                padding:90px 40px;
                 text-align:left;
                 color:white;
             }
@@ -64,16 +69,33 @@
             }
 
             .hero-logo{
-                width:420px;
-                max-width:85%;
+                width:230px;
                 margin-bottom:35px;
+            }
+
+            .hero-kicker{
+                font-family:'K2D',sans-serif;
+                font-size:.95rem;
+                letter-spacing:2px;
+                text-transform:uppercase;
+                margin-bottom:12px;
+                opacity:.9;
             }
             
             .hero-title{
-                font-size:4.5rem;
-                line-height:1;
-                margin-bottom:20px;
-                text-shadow:0 2px 6px rgba(0,0,0,.3);
+                font-family:'K2D',sans-serif;
+                font-weight:700;
+                font-size:5.5rem;
+                line-height:.95;
+                margin-bottom:25px;
+            }
+
+            .hero-intro{
+                max-width:620px;
+                font-family:'Source Serif 4',serif;
+                font-size:1.45rem;
+                line-height:1.5;
+                margin-bottom:40px;
             }
             
             .hero-subtitle{
@@ -88,6 +110,30 @@
                 letter-spacing:1px;
                 margin-bottom:35px;
             }
+
+            .hero-actions{
+                display:flex;
+                gap:15px;
+                flex-wrap:wrap;
+            }
+            
+            .hero-button{
+                padding:14px 26px;
+                border-radius:999px;
+                text-decoration:none;
+                font-weight:700;
+            }
+            
+            .hero-button-primary{
+                background:white;
+                color:#1a1614;
+            }
+            
+            .hero-button-secondary{
+                border:2px solid white;
+                color:white;
+            }
+
             
             .whatsapp-button{
                 display:inline-block;
@@ -260,22 +306,28 @@
 
         <section class="hero">
             <div class="hero-content">
+            
                 <img
                     class="hero-logo"
                     src="https://sanblasreservaambiental.org/dossier/img/logo-blanco.webp"
                     alt="San Blas Reserva Ambiental">
+                <p class="hero-kicker">
+                    Visitas guiadas · Barceló Tenerife
+                </p>
                 <h1 class="hero-title">
                     Leer Canarias en un paisaje
                 </h1>
-                <p class="hero-subtitle">
-                    Naturaleza, patrimonio e historia en el corazón de Barceló Tenerife
-                </p>
-                <p class="hero-dates">
-                    Visitas guiadas disponibles de martes a sábado
+                <p class="hero-intro">
+                    Un recorrido guiado por la Reserva Ambiental, el Museo y el Túnel de la Experiencia Histórica para descubrir cómo volcanes, biodiversidad y personas han modelado el territorio canario a lo largo del tiempo.
                 </p>
                 <div class="hero-actions">
-                    <a href="https://wa.me/34922097040" class="whatsapp-button">
-                        Solicite información por WhatsApp
+                    <a class="hero-button hero-button-primary"
+                       href="https://wa.me/34922097040">
+                        Solicitar información
+                    </a>
+                    <a class="hero-button hero-button-secondary"
+                       href="https://www.barcelo.com/guia-turismo/es/espana/tenerife/actividades/1121/">
+                        Reservar visita
                     </a>
                 </div>
             </div>
