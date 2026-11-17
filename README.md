@@ -1,100 +1,110 @@
 # Emailing · San Blas Reserva Ambiental
 
-Campaña para huéspedes de Barceló Tenerife. Diseño con K2D, Source Serif 4, basalto, arena y almagre, siguiendo el dossier.
+Campaña para huéspedes de Barceló Tenerife: dos correos breves y una ficha web en ocho idiomas. Diseño de la web basado en el dossier, con K2D, Source Serif 4, basalto, arena y almagre. Los correos usan tablas y estilos en línea para clientes de correo.
 
-## Archivos
+## Dónde están los correos
 
-- `mailing/emails/intern_email_2.0_{es,en,fr,de,nl,ru,it,pl}.html`: ocho páginas online estáticas con selector de idioma.
-- `mailing/emails/hotel-content.json`: textos y traducciones.
-- `mailing/emails/hotel.css`: estilos adaptables.
-- `mailing/emails/hotel-booking.js`: calendario, validación, mensaje y consentimiento de cargo.
-- `mailing/emails/correo-huespedes-{es,en}.{html,txt,eml}`: correos en español e inglés y borradores multipartes para Outlook, sin destinatarios.
-- `assets/img/hotel-*`, `logo-blanco.png`, `logo-reserva.png`: fotografías, logotipo y favicon locales.
-- `/`, `/mailing/` y `/mailing/emails/`: entradas con selector de idioma.
+Los archivos vigentes están en **`hotel/correo/`**:
 
-Se conservan los correos escolares y `intern_email_1.0.html` como histórico.
+| Idioma | Vista HTML | Texto alternativo | Borrador para correo |
+| --- | --- | --- | --- |
+| Español | [hotel/correo/es.html](hotel/correo/es.html) | [es.txt](hotel/correo/es.txt) | [es.eml](hotel/correo/es.eml) |
+| Inglés | [hotel/correo/en.html](hotel/correo/en.html) | [en.txt](hotel/correo/en.txt) | [en.eml](hotel/correo/en.eml) |
 
-## Actualizar
+Vistas públicas: [correo en español](https://emailing.sanblasreservaambiental.org/hotel/correo/es.html) y [correo en inglés](https://emailing.sanblasreservaambiental.org/hotel/correo/en.html).
 
-Editar textos o generador y ejecutar desde la raíz de `emailing`:
+Los HTML sirven para revisar y reutilizar el contenido. Los EML son borradores multipartes (HTML y texto), con `X-Unsent: 1` y sin destinatarios. Abrirlos en el cliente de correo compatible, revisar remitente y formato, añadir destinatarios y realizar un envío de prueba en Outlook/Gmail antes de distribuir. Generar o publicar estos archivos no envía ningún correo.
+
+Cada correo presenta brevemente las dos modalidades y las tarifas para huéspedes, incluye una ficha visual enlazada a la web y enlaces a los ocho idiomas. Los horarios, las condiciones y el formulario están en la ficha web. Al cierre, cinco estrellas enlazan a [FastReview](https://app.fastreview.pro/home/A5q3G8kVo1eM6Zr); son un enlace, no un selector de puntuación.
+
+## Páginas web
+
+Dominio: **https://emailing.sanblasreservaambiental.org**.
+
+| Ruta | Contenido |
+| --- | --- |
+| `/` | Índice vacío |
+| `/hotel/` | Inglés, versión predeterminada |
+| `/hotel/es/` | Español |
+| `/hotel/en/` | Inglés, también accesible con código de idioma |
+| `/hotel/fr/` | Francés |
+| `/hotel/de/` | Alemán |
+| `/hotel/nl/` | Neerlandés |
+| `/hotel/ru/` | Ruso |
+| `/hotel/it/` | Italiano |
+| `/hotel/pl/` | Polaco |
+| `/hotel/correo/es.html` y `/hotel/correo/en.html` | Vistas de los dos correos |
+
+Los índices de `/mailing/`, `/mailing/emails/` y `/hotel/correo/` también están vacíos. Las rutas anteriores `mailing/emails/intern_email_2.0_{idioma}.html` y `mailing/emails/correo-huespedes-{es,en}.{html,txt,eml}` se conservan por compatibilidad con enlaces compartidos. Para nuevos usos, utilizar las rutas de `hotel/`. Se conservan también el correo escolar y `intern_email_1.0.html` como histórico.
+
+## Fuentes y generación
+
+| Archivo o directorio | Función |
+| --- | --- |
+| `scripts/build_hotel.py` | Genera las páginas, los correos y los índices vacíos |
+| `mailing/emails/hotel-content.json` | Textos y traducciones de las ocho páginas |
+| `mailing/emails/hotel.css` | Estilos de la web |
+| `mailing/emails/hotel-booking.js` | Calendario, validación, revisión, consentimiento y preparación del mensaje |
+| `booking-availability.json` | Cierres y fechas llenas compartidos por los ocho idiomas |
+| `scripts/hotel-booking.test.mjs` | Pruebas de fechas, horarios, tarifas y mensajes |
+| `assets/img/` y `assets/flags/` | Fotos, logotipos, favicon, imagen para compartir y banderas |
+| `docs/disponibilidad-remota.md` | Investigación de la disponibilidad de Barceló Experiences/Kora |
+
+Editar las fuentes y ejecutar desde la raíz de este repositorio:
 
 ```powershell
 python scripts/build_hotel.py
 node --test scripts/hotel-booking.test.mjs
+git diff --check
 ```
 
-El generador sobrescribe las ocho páginas, los correos HTML/TXT/EML y las entradas. No requiere dependencias externas. El script clásico permite revisar la web mediante `file://`.
+El generador usa Python 3 sin dependencias externas. Sobrescribe los archivos de salida, incluidas las copias de compatibilidad: no editar manualmente esos HTML, TXT o EML. La copia breve específica del correo está en `email_copy` dentro del generador. El JavaScript es clásico y permite revisar las páginas mediante `file://`; las imágenes de los correos usan direcciones públicas.
 
-## Tarifas y horarios
+## Tarifas y datos prácticos
 
-- Completa: huéspedes adultos desde 12 años 15 €; niños de 3 a 11 años 8 €. No residentes: 22,50 € y 14,50 €, respectivamente. De martes a sábado, 09:30.
-- Solo interiores: 10 € por entrada para huéspedes, adultos y niños; no residentes 15 €. Martes, jueves y viernes, 11:30.
-- Plazas limitadas. El hero expresa «entre un 33 % y un 45 % de descuento», con la nota de porcentajes aproximados frente a no residentes. Los descuentos exactos son 33,33 % y 44,83 % según tarifa.
+| Modalidad | Huéspedes | No residentes | Horario | Duración |
+| --- | --- | --- | --- | --- |
+| Completa, exterior e interiores | Adultos desde 12 años: 15 €; niños de 3–11 años: 8 € | Adultos: 22,50 €; niños: 14,50 € | Martes a sábado, 09:30 | 3 h |
+| Solo interiores | 10 € por entrada, adultos y niños | 15 € por entrada | Martes, jueves y viernes, 11:30 | 1 h |
 
-## Reservas
+Plazas limitadas. La web anuncia entre un 33 % y un 45 % de descuento, con explicación al pie: 33,33 % para adultos de completa y entradas de interiores; 44,83 % para niños de completa. Punto de encuentro: mostrador de la Reserva Ambiental, planta 2 del hotel.
 
-Tres desplegables nativos, inicialmente cerrados y en este orden:
+Los contenidos y las visitas con guía están garantizados en español e inglés. Para contenidos en otros idiomas, contactar con antelación para planificar la visita. Las ocho traducciones de la web no implican guías en ocho idiomas.
 
-1. **Reservar online · Barceló Experiences**: fichas `/actividades/1121/` para completa y `/actividades/104/` para interiores.
-2. **Reservar personalmente en el hotel · Recepción**: marcar 3 desde la habitación o llamar al +34 922 74 90 10. Recepción llama al equipo para consultar visitas del mismo día tras el cierre de solicitudes directas.
-3. **Reservar directamente con la Reserva Ambiental**: formulario con opción y fecha en la primera fila; apellidos, nombre opcional, habitación, adultos y niños.
+## Reservas y calendario
 
-Las solicitudes directas para hoy cierran a las 09:00 de Canarias. La primera carga propone una fecha válida. Después, la fecha elegida se conserva aunque sea inválida: el campo se marca en rojo y explica el motivo, muestra los días de visita y propone una fecha posterior. Solo «Tomar esta fecha» aplica la alternativa. En interiores, hoy sigue seleccionable si hay sesión: entre las 09:00 y las 11:00 oculta y deshabilita los datos personales y muestra solo recepción. Desde las 11:00, hoy deja de ser seleccionable; si estaba elegido, se conserva con aviso y una propuesta que debe aceptarse. Para una fecha futura vuelve el formulario.
+Tres desplegables, inicialmente cerrados:
 
-Tras rellenar datos y revisar la solicitud, el cliente acepta el cargo del total a su habitación después de la visita. Eso habilita dos botones: **Enviar desde mi correo** y **Enviar desde mi WhatsApp**. El mensaje se redacta siempre en inglés e incluye visita, hora, fecha, datos del huésped y `userlanguage` con el código del idioma de la página. No incluye comparativas de precios ni notas internas. El formulario y el consentimiento siguen en el idioma del huésped. El cargo y la aceptación se muestran antes de abrir la aplicación del cliente.
+1. **Barceló Experiences:** completa en `/actividades/1121/` e interiores en `/actividades/104/`.
+2. **Recepción:** marcar 3 desde la habitación o llamar al +34 922 74 90 10.
+3. **Directamente con la Reserva Ambiental:** formulario con modalidad y fecha arriba, apellidos, nombre opcional, habitación, adultos y niños.
 
-Correo y WhatsApp contactan directamente con el equipo en `tenerife.ambiental-res@barcelo.com` y +34 922 097 040. No hay backend, envío automático, cobro automático ni almacenamiento persistente. Los datos no se añaden a la URL de la página ni se transfieren a Barceló Experiences. Los correos enlazan al formulario online; no contienen formularios interactivos.
+Todas las horas son de Canarias. Las solicitudes directas para hoy cierran a las 09:00. Solo para interiores en un día con sesión y sin cierre, después de las 09:00 y antes de las 11:00 se ocultan los datos personales y se ofrece contactar con recepción para que llame al equipo. Desde las 11:00 ya no se puede elegir interiores para hoy. Para fechas futuras vuelve el formulario.
 
-## Publicación y revisión
+El calendario deshabilita días sin sesión, pasados, cerrados o llenos. Admite escritura de fecha `AAAA-MM-DD`. La primera carga propone una fecha válida; después conserva la elección del cliente aunque sea inválida. El aviso explica el problema y ofrece la primera visita desde hoy y la primera posterior a la fecha elegida, sin duplicarlas si coinciden. Solo el botón «Tomar esta fecha» aplica una propuesta.
 
-Publicar en el GitHub Pages existente con el dominio de `CNAME`: `emailing.sanblasreservaambiental.org`. Sin compilación. Las imágenes y enlaces públicos de los correos presuponen esa publicación.
+Tras revisar la solicitud, el cliente acepta el cargo del total a su habitación después de la visita. Se habilitan dos opciones: enviar desde su correo o desde su WhatsApp; también puede copiar el mensaje. El mensaje siempre está en inglés e incluye `userlanguage` con el idioma del cliente. Si cambian los datos hay que revisar y aceptar de nuevo el cargo.
 
-Las pruebas cubren días de visita, fechas inválidas, cierre diario, hora de Canarias en verano, alternativa de recepción, tarifas, mensajes y enlaces multilingües. Revisar también escritorio/móvil y realizar un envío de prueba en Outlook/Gmail antes de distribuir. Los contenidos y las visitas con guía están garantizados en español e inglés. Para contenidos en otros idiomas, contactar con la Reserva con antelación para planificar la visita. Las ocho traducciones de la web no implican visitas guiadas en ocho idiomas.
+Contacto directo: `tenerife.ambiental-res@barcelo.com` y WhatsApp +34 922 097 040. No hay backend, envío automático, confirmación automática, cobro automático ni almacenamiento persistente. Los datos del formulario no se envían a Barceló Experiences ni se añaden a la dirección de la página.
 
-## Fechas llenas y disponibilidad remota
+### Cerrar días
 
-`booking-availability.json` permite cerrar días para ambas modalidades (`closedDates`) o marcar fechas llenas por modalidad (`fullyBookedDates.full` y `fullyBookedDates.inside`). Las fechas cerradas se mantienen en este único archivo compartido por los ocho idiomas. Usar `AAAA-MM-DD`, regenerar con `python scripts/build_hotel.py` y publicar los resultados. Se saltan también en la alternativa presencial del mismo día.
+Editar únicamente `booking-availability.json`:
 
-La consulta remota de Kora Travel está investigada pero no conectada: ver `docs/disponibilidad-remota.md` para resultados, diferencias de horarios y requisitos de integración.
+- `closedDates`: cierres para ambas modalidades.
+- `fullyBookedDates.full`: fechas llenas/cerradas de la completa.
+- `fullyBookedDates.inside`: fechas llenas/cerradas de interiores.
 
-## Calendario y datos prácticos
+Usar fechas completas `AAAA-MM-DD`, regenerar y publicar. Se respetan también al ofrecer recepción y fechas alternativas. La disponibilidad remota de Kora está investigada, pero **no está conectada**: el calendario no representa cupos en tiempo real.
 
-El calendario propio deshabilita los días sin sesión y los días cerrados/llenos: completa de martes a sábado; interiores martes, jueves y viernes. Permite escribir una fecha ISO (`AAAA-MM-DD`), con error junto al campo y confirmación explícita para adoptar la siguiente fecha válida. Se puede manejar con teclado, flechas y Escape. No altera la fecha al recuperar el foco, cambiar de modalidad o superar una hora de cierre.
+## Compartir y buscadores
 
-Duración: completa 180 minutos (3 h), según `intern_email_1.0.html`; interiores 1 h, confirmada por el equipo. Punto de encuentro para ambas: mostrador de la Reserva Ambiental en la planta 2 del hotel.
+Las páginas de hotel y las vistas HTML de los correos incluyen Open Graph y Twitter Card localizados. La imagen compartida es `assets/img/hotel-compartir.jpg`, de 1200 × 630. `robots.txt` permite esa imagen para las vistas previas y bloquea otros recursos y archivos auxiliares.
 
-### Dos alternativas para una fecha no válida
+Todas las páginas HTML llevan `noindex, nofollow, noarchive`. El HTML permanece rastreable para que los buscadores puedan leer `noindex`. Los índices vacíos no muestran contenido ni tienen ficha de compartir. Estas directivas no sustituyen un control de acceso.
 
-El aviso propone la primera visita disponible desde hoy y, si es distinta, la primera posterior a la fecha elegida. Cada propuesta tiene su botón «Tomar esta fecha». Si coinciden, solo aparece una. Se respetan los días de sesión, los cierres horarios de Canarias y `booking-availability.json`. Ninguna de las propuestas se aplica sin pulsar su botón.
+## Publicación y comprobación
 
-## Refuerzo del formulario
+GitHub Pages publica desde la rama `main`, directorio raíz, con el dominio indicado en `CNAME`. Después de regenerar, revisar los cambios, ejecutar las pruebas, confirmar y subir a `main`. Comprobar que termina el despliegue y que funcionan las páginas, recursos, enlaces y metadatos públicos.
 
-Incluye errores junto a cada campo, nombre marcado como opcional, límites aritméticos seguros para cantidades, preservación de fechas, bloqueo de días no hábiles, confirmación de cada propuesta y revisión del resumen frente a los datos actuales antes de abrir una aplicación. Si los datos cambian, hay que aceptar de nuevo el cargo. Se evita abrir varias aplicaciones por una doble pulsación. La solicitud se puede copiar como alternativa tras aceptar el cargo; si no hay acceso al portapapeles, se selecciona el texto para copiarlo manualmente.
-
-Si el script falta o no puede iniciarse, queda visible el contacto directo y los paneles de reserva siguen disponibles. El formulario puede preparar el mensaje sin red una vez cargada la página; enviar desde correo/WhatsApp requiere la aplicación correspondiente. No hay reserva, confirmación ni cobro automáticos.
-
-Comprobado en Chrome con 320 y 390 px, texto al 200 %, colores forzados, datos con acentos/CJK/árabe/emoji, errores de inicio, cantidades inválidas y cambios posteriores a la revisión. Ocho banderas en una fila. Los mensajes se mantienen en inglés con `userlanguage`, también `pl`. Los clientes Outlook y Safari requieren su prueba de envío/dispositivo correspondiente.
-
-## Claridad y adaptación visual
-
-Instrucciones abreviadas en los ocho idiomas, explicación del mensaje en inglés y opción de volver a editar conservando los datos. El envío mantiene dos opciones; copiar queda como alternativa secundaria. Iconos SVG coherentes en la web y estructura independiente compatible con correo en las plantillas. Imagen principal adaptable a la anchura de pantalla.
-
-El calendario se monta fuera del desplegable para evitar recortes; en móvil aparece dentro de la pantalla y en escritorio se coloca junto al campo. Comprobado también en horizontal de 844 × 390 px.
-
-## Exclusión de buscadores
-
-Todas las páginas HTML incluyen `noindex, nofollow, noarchive`, también las generadas y las plantillas antiguas. `robots.txt` bloquea recursos y archivos auxiliares; permite leer el HTML para que los buscadores puedan aplicar `noindex`. No sustituye un control de acceso.
-
-## Índices vacíos
-
-Los índices de `/`, `/mailing/` y `/mailing/emails/` no muestran contenido ni enlaces. Las ocho páginas de idioma permanecen en `/mailing/emails/intern_email_2.0_{idioma}.html`, accesibles por enlace directo y con exclusión de buscadores. El generador conserva los índices vacíos.
-
-## Rutas de hotel
-
-`/hotel/` muestra inglés. Las otras versiones están en `/hotel/es/`, `/hotel/fr/`, `/hotel/de/`, `/hotel/nl/`, `/hotel/ru/`, `/hotel/it/` y `/hotel/pl/`. `/hotel/en/` también ofrece inglés. Los correos y las banderas usan estas rutas. El índice raíz queda vacío. Las páginas antiguas siguen disponibles para conservar enlaces compartidos. Todas mantienen `noindex, nofollow, noarchive`.
-
-## Correo breve y vistas al compartir
-
-Los dos correos presentan la actividad con las tarifas para huéspedes y una ficha visual enlazada a la web; los detalles y el formulario quedan en la página. HTML, TXT y EML incluyen enlaces a los ocho idiomas.
-
-Las páginas de hotel, sus versiones anteriores y las vistas HTML del correo incorporan Open Graph y Twitter Card con textos localizados e imagen compartida `assets/img/hotel-compartir.jpg` (1200 × 630). La imagen está permitida en robots para las vistas previas; se conserva `noindex, nofollow, noarchive`. Los índices vacíos no tienen ficha de compartir.
+El formulario se ha comprobado en Chrome con anchuras móviles, texto al 200 %, colores forzados, errores de inicio y datos multilingües. Los correos mantienen tablas y estilos en línea; la prueba real de envío en Outlook/Gmail y la revisión en Safari siguen siendo necesarias antes de distribuirlos.

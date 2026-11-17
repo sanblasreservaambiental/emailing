@@ -8,6 +8,8 @@ from datetime import date
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'mailing' / 'emails'
+EMAIL_OUT = ROOT / 'hotel' / 'correo'
+EMAIL_OUT.mkdir(parents=True, exist_ok=True)
 DATA = json.loads((OUT / 'hotel-content.json').read_text(encoding='utf-8'))
 AVAILABILITY = json.loads((ROOT / 'booking-availability.json').read_text(encoding='utf-8'))
 required_form_keys=set(DATA['en']['bookingForm'])
@@ -191,7 +193,7 @@ for lang, d in DATA.items():
     }[lang]
     language_links = ' · '.join(f'<a style="color:#574c43;line-height:2" lang="{code}" href="{hotel_url(code)}">{e(v["name"])}</a>' for code,v in DATA.items())
     language_text = '\n'.join(f'{v["name"]}: {hotel_url(code)}' for code,v in DATA.items())
-    email_url = 'https://emailing.sanblasreservaambiental.org/mailing/emails/correo-huespedes-' + lang + '.html'
+    email_url = 'https://emailing.sanblasreservaambiental.org/hotel/correo/' + lang + '.html'
     # Breve presentación y ficha enlazada, con tablas y estilos en línea para correo.
     email_html = f'''<!doctype html><html lang="{lang}"><head><meta charset="utf-8"><meta name="robots" content="noindex, nofollow, noarchive"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{e(email_copy['heading'])}</title>{FONTS}{social_meta(d,lang,email_url)}</head>
 <body style="margin:0;background:#faf8f3;color:#1a1614;font:16px/1.6 Arial,Helvetica,sans-serif">
@@ -212,7 +214,7 @@ for lang, d in DATA.items():
     plain = '\n\n'.join([d['greeting'], email_copy['heading'], email_copy['intro'], email_copy['full'], email_copy['inside'], email_copy['cardText'], email_copy['cta']+': '+hotel_url(lang), email_copy['languages'], language_text, d['signoff'], 'San Blas Reserva Ambiental · Barceló Tenerife', ADDRESS, email_copy['reviewHeading'], email_copy['reviewCta']+'\n★★★★★ '+REVIEW_URL, d['unsubscribe']])
     # Fuentes de marca con alternativas para clientes sin fuentes web.
     email_html = email_html.replace('Arial,Helvetica,sans-serif', "'Source Serif 4',Georgia,serif").replace('Arial,sans-serif', 'K2D,Arial,sans-serif').replace('K2D,K2D,', 'K2D,')
-    stem = OUT / f'correo-huespedes-{lang}'
+    stem = EMAIL_OUT / lang
     stem.with_suffix('.html').write_text(email_html, encoding='utf-8')
     stem.with_suffix('.txt').write_text(plain, encoding='utf-8')
     msg = EmailMessage(policy=policy.SMTP)
@@ -222,9 +224,12 @@ for lang, d in DATA.items():
     msg.set_content(plain)
     msg.add_alternative(email_html, subtype='html')
     stem.with_suffix('.eml').write_bytes(msg.as_bytes())
+    # Conservar las direcciones anteriores ya compartidas.
+    for suffix in ('.html', '.txt', '.eml'):
+        (OUT / f'correo-huespedes-{lang}{suffix}').write_bytes(stem.with_suffix(suffix).read_bytes())
 
 # Índices deliberadamente vacíos; las páginas de idioma conservan su URL directa.
 blank_index = '<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="robots" content="noindex, nofollow, noarchive"><title></title></head><body></body></html>\n'
-for path in (ROOT/'index.html', ROOT/'mailing'/'index.html', OUT/'index.html'):
+for path in (ROOT/'index.html', ROOT/'mailing'/'index.html', OUT/'index.html', EMAIL_OUT/'index.html'):
     path.write_text(blank_index, encoding='utf-8')
-print(f'Generadas {len(DATA)} páginas online, 2 correos HTML/TXT/EML y 3 índices vacíos.')
+print(f'Generadas {len(DATA)} páginas online, 2 correos HTML/TXT/EML y 4 índices vacíos.')
