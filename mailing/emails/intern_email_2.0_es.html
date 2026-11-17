@@ -1,420 +1,337 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>San Blas Reserva Ambiental</title>
-
-<link href="https://fonts.googleapis.com/css2?family=K2D:wght@500;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-
-<style>
-
-:root{
-    --primary:#1f4d4a;
-    --secondary:#d8b36a;
-    --dark:#1a1a1a;
-    --light:#f5f5f2;
-}
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    font-family:'Lato',sans-serif;
-    color:#333;
-    line-height:1.7;
-    background:#fff;
-}
-
-h1,h2,h3,h4{
-    font-family:'K2D',sans-serif;
-    font-weight:900;
-}
-
-.hero{
-    position:relative;
-    min-height:80vh;
-    background:url('https://sanblasreservaambiental.org/dossier/img/presa.jpg') center center/cover no-repeat;
-    display:flex;
-    align-items:center;
-}
-
-.hero::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:rgba(0,0,0,.45);
-}
-
-.hero-content{
-    position:relative;
-    max-width:900px;
-    margin:auto;
-    padding:60px 30px;
-    text-align:center;
-    color:white;
-}
-
-.hero h1{
-    font-size:4rem;
-    margin-bottom:20px;
-}
-
-.hero p{
-    font-size:1.3rem;
-}
-
-.section{
-    padding:90px 20px;
-}
-
-.container{
-    max-width:1200px;
-    margin:auto;
-}
-
-.intro{
-    text-align:center;
-}
-
-.intro h2{
-    color:var(--primary);
-    margin-bottom:30px;
-}
-
-.lead{
-    font-size:1.2rem;
-    max-width:900px;
-    margin:20px auto;
-}
-
-.cards{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:30px;
-    margin-top:50px;
-}
-
-.card{
-    padding:35px;
-    border-radius:16px;
-    background:#fff;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
-}
-
-.card h3{
-    color:var(--primary);
-    margin-bottom:15px;
-}
-
-.stats{
-    background:var(--light);
-}
-
-.stats-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:25px;
-}
-
-.stat{
-    background:white;
-    padding:35px;
-    border-radius:18px;
-    text-align:center;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
-    transition:.3s ease;
-}
-
-.stat:hover{
-    transform:translateY(-5px);
-}
-
-.stat-icon{
-    font-size:3rem;
-    color:#d8b36a;
-    margin-bottom:20px;
-}
-
-.stat-number{
-    font-size:3rem;
-    font-weight:900;
-    color:#1f4d4a;
-    font-family:'K2D',sans-serif;
-}
-
-.stat h4{
-    margin:15px 0 10px;
-    color:#1f4d4a;
-}
-
-.recommendations{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:30px;
-    margin-top:40px;
-}
-
-.recommendation{
-    text-align:center;
-}
-
-.recommendation h3{
-    margin:20px 0;
-}
-
-.cta{
-    background:var(--dark);
-    color:white;
-    text-align:center;
-    padding:100px 20px;
-}
-
-.cta h2{
-    max-width:900px;
-    margin:0 auto 30px;
-}
-
-.button{
-    display:inline-block;
-    padding:18px 40px;
-    background:var(--secondary);
-    color:#000;
-    text-decoration:none;
-    border-radius:40px;
-    font-weight:700;
-}
-
-.footer{
-    background:#23242a;
-    color:white;
-    text-align:center;
-    padding:60px 20px;
-}
-
-.footer p{
-    margin-bottom:10px;
-}
-
-</style>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>San Blas Reserva Ambiental</title>
+        <link href="https://fonts.googleapis.com/css2?family=K2D:wght@500;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+        <style>
+            :root{
+                --primary:#1f4d4a;
+                --secondary:#d8b36a;
+                --dark:#1a1a1a;
+                --light:#f5f5f2;
+            }
+            
+            *{
+                margin:0;
+                padding:0;
+                box-sizing:border-box;
+            }
+            
+            body{
+                font-family:'Lato',sans-serif;
+                color:#333;
+                line-height:1.7;
+                background:#fff;
+            }
+            
+            h1,h2,h3,h4{
+                font-family:'K2D',sans-serif;
+                font-weight:900;
+            }
+            
+            .hero{
+                position:relative;
+                min-height:80vh;
+                background:url('https://sanblasreservaambiental.org/dossier/img/presa.jpg') center center/cover no-repeat;
+                display:flex;
+                align-items:center;
+            }
+            
+            .hero::before{
+                content:"";
+                position:absolute;
+                inset:0;
+                background:rgba(0,0,0,.45);
+            }
+            
+            .hero-content{
+                position:relative;
+                max-width:900px;
+                margin:auto;
+                padding:60px 30px;
+                text-align:center;
+                color:white;
+            }
+            
+            .hero h1{
+                font-size:4rem;
+                margin-bottom:20px;
+            }
+            
+            .hero p{
+                font-size:1.3rem;
+            }
+            
+            .section{
+                padding:90px 20px;
+            }
+            
+            .container{
+                max-width:1200px;
+                margin:auto;
+            }
+            
+            .intro{
+                text-align:center;
+            }
+            
+            .intro h2{
+                color:var(--primary);
+                margin-bottom:30px;
+            }
+            
+            .lead{
+                font-size:1.2rem;
+                max-width:900px;
+                margin:20px auto;
+            }
+            
+            .cards{
+                display:grid;
+                grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+                gap:30px;
+                margin-top:50px;
+            }
+            
+            .card{
+                padding:35px;
+                border-radius:16px;
+                background:#fff;
+                box-shadow:0 10px 30px rgba(0,0,0,.08);
+                border-top:5px solid var(--secondary);
+            }
+            
+            .card h3{
+                color:var(--primary);
+                margin-bottom:15px;
+                min-height:72px;
+            }
+            
+            .stats{
+                background:var(--light);
+            }
+            
+            .metrics{
+                display:flex;
+                justify-content:center;
+                flex-wrap:wrap;
+                gap:45px;
+                margin-top:60px;
+            }
+            
+            .metric{
+                text-align:center;
+                min-width:180px;
+            }
+            
+            .metric-icon{
+                font-size:2.8rem;
+                margin-bottom:15px;
+            }
+            
+            .metric-value{
+                font-family:'K2D',sans-serif;
+                font-size:3rem;
+                font-weight:900;
+                color:var(--primary);
+                line-height:1;
+            }
+            
+            .metric-label{
+                margin-top:10px;
+                font-weight:700;
+                color:#666;
+            }
+            
+            .metric-description{
+                margin-top:5px;
+                font-size:.9rem;
+                color:#888;
+            }
+            
+            .recommendations{
+                display:grid;
+                grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+                gap:30px;
+                margin-top:40px;
+            }
+            
+            .recommendation{
+                text-align:center;
+            }
+            
+            .recommendation h3{
+                margin:20px 0;
+            }
+            
+            .cta{
+                background:var(--dark);
+                color:white;
+                text-align:center;
+                padding:100px 20px;
+            }
+            
+            .cta h2{
+                max-width:900px;
+                margin:0 auto 30px;
+            }
+            
+            .button{
+                display:inline-block;
+                padding:18px 40px;
+                background:var(--secondary);
+                color:#000;
+                text-decoration:none;
+                border-radius:40px;
+                font-weight:700;
+            }
+            
+            .footer{
+                background:#23242a;
+                color:white;
+                text-align:center;
+                padding:60px 20px;
+            }
+            
+            .footer p{
+                margin-bottom:10px;
+            }
+            
+        </style>
 </head>
 
-<body>
+    <body>
 
-<section class="hero">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>SAN BLAS RESERVA AMBIENTAL</h1>
+                <p>Un paisaje para comprender la historia natural y humana del archipiélago canario</p>
+                <p style="margin-top:15px;font-size:1rem;">Visitas guiadas disponibles de martes a sábado</p>
+            </div>
+        </section>
 
-<div class="hero-content">
+        <section class="section intro">
+            <div class="container">
+                <h2>¿Qué hace único a Barceló Tenerife?</h2>
+                <p class="lead">Dentro de Barceló Tenerife se encuentra uno de los paisajes más singulares del archipiélago canario. San Blas Reserva Ambiental conserva la huella de los procesos naturales y humanos que han modelado estas islas durante siglos.</p>
+                <p class="lead">La visita guiada combina naturaleza, patrimonio, arqueología e interpretación del paisaje para descubrir cómo volcanes, agua, biodiversidad y actividad humana han dado forma al territorio que hoy conocemos.</p>
+            </div>
+        </section>
 
-<h1>SAN BLAS RESERVA AMBIENTAL</h1>
+        <section class="section">
+            <div class="container">
+                <div style="text-align:center; margin-bottom:60px;">
+                    <h2>Un paisaje que cuenta historias</h2>
+                    <p>Descubra cómo naturaleza, biodiversidad, patrimonio y cultura se unen para explicar la evolución de Canarias a través de un único lugar.</p>
+                </div>
+                
+                <div class="cards">
+                    <div class="card">
+                        <h3>Leer Canarias en un paisaje</h3>
+                        <p>Los volcanes, el agua, la erosión y el tiempo han dejado su huella en cada rincón de la reserva. San Blas permite comprender los procesos naturales que han modelado el paisaje canario durante miles de años.</p>
+                    </div>
 
-<p>
-El paisaje que cuenta la historia de Tenerife
-</p>
+                    <div class="card">
+                        <h3>Biodiversidad adaptada al territorio</h3>
+                        <p>Plantas y animales han desarrollado estrategias únicas para sobrevivir en un entorno marcado por el volcanismo, la escasez de agua y las condiciones del sur de Canarias. Cada especie ayuda a comprender el entorno en el que ha evolucionado.</p>
+                    </div>
 
-</div>
+                    <div class="card">
+                        <h3>La huella de quienes nos precedieron</h3>
+                        <p>La reserva conserva evidencias de la presencia humana a lo largo de los siglos. El agua, la agricultura y los vestigios arqueológicos permiten descubrir cómo diferentes comunidades se adaptaron a este territorio y contribuyeron a moldearlo.</p>
+                    </div>
 
-</section>
+                    <div class="card">
+                        <h3>El corazón natural de Barceló Tenerife</h3>
+                        <p>Una experiencia exclusiva integrada en el hotel que conecta naturaleza, patrimonio e interpretación del paisaje en uno de los espacios más singulares del archipiélago canario.</p>
+                    </div>
 
-<section class="section intro">
+                </div>
+            </div>
+        </section>
 
-<div class="container">
+        <section class="section stats">
+            <div class="container">
+                <h2 style="text-align:center;margin-bottom:20px;">Información práctica</h2>
+                <p style="text-align:center;max-width:700px;margin:0 auto 50px;">Una experiencia guiada que combina naturaleza, patrimonio y paisaje para descubrir la evolución de Canarias a través de uno de sus territorios más singulares.</p>
+            </div>
+            <div class="metrics">
+            
+                <div class="metric">
+                    <div class="metric-icon">🌿</div>
+                    <div class="metric-value">500.000</div>
+                    <div class="metric-label">m² protegidos</div>
+                    <div class="metric-description">
+                        Integrados en Barceló Tenerife
+                    </div>
+                </div>
+            
+                <div class="metric">
+                    <div class="metric-icon">🥾</div>
+                    <div class="metric-value">2500</div>
+                    <div class="metric-label">metros</div>
+                    <div class="metric-description">
+                        de recorrido guiado
+                    </div>
+                </div>
+            
+                <div class="metric">
+                    <div class="metric-icon">🚶</div>
+                    <div class="metric-value">Baja</div>
+                    <div class="metric-label">dificultad</div>
+                    <div class="metric-description">senderos de nivel sencillo</div>
+                </div>
+            
+                <div class="metric">
+                    <div class="metric-icon">🕒</div>
+                    <div class="metric-value">180</div>
+                    <div class="metric-label">minutos</div>
+                    <div class="metric-description">
+                        de experiencia
+                    </div>
+                </div>
+            
+            </div>
+        </section>
 
-<h2>¿Qué hace único a Barceló Tenerife?</h2>
+        <section class="section">
+            <div class="container">
+                <h2 style="text-align:center;">Antes de su visita</h2>
+                <p style="text-align:center;max-width:700px;margin:20px auto 50px auto;">Al tratarse de un recorrido al aire libre por un entorno natural, le recomendamos acudir preparado para disfrutar plenamente de la experiencia.</p>
+                <div class="recommendations">
+                    <div class="recommendation">
+                        <h3>Calzado cómodo</h3>
+                        <p>Se recomienda utilizar calzado adecuado para caminar por senderos naturales.</p>
+                    </div>
+                    <div class="recommendation">
+                        <h3>Agua</h3>
+                        <p>Lleve agua para mantenerse hidratado durante el recorrido.</p>
+                    </div>
+                    <div class="recommendation">
+                        <h3>Protección solar</h3>
+                        <p>La visita se desarrolla principalmente al aire libre.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<p class="lead">
-Dentro del hotel se encuentra uno de los espacios naturales más singulares del sur de Tenerife: una reserva ambiental de más de 500.000 m² donde volcanes, biodiversidad e historia humana se unen en un único paisaje.
-</p>
-
-<p class="lead">
-A través de una visita guiada exclusiva descubrirá cómo la naturaleza y las personas han modelado este territorio durante miles de años, convirtiéndolo en uno de los lugares más fascinantes de Canarias.
-</p>
-
-</div>
-
-</section>
-
-<section class="section">
-
-<div class="container">
-
-<div style="text-align:center; margin-bottom:60px;">
-
-<h2>¿Por qué visitar San Blas?</h2>
-
-<p>
-Mucho más que una excursión.
-</p>
-
-</div>
-
-<div class="cards">
-
-<div class="card">
-<h3>El origen volcánico de Tenerife</h3>
-<p>
-Descubra cómo el volcanismo modeló el paisaje que hoy caracteriza el sur de la isla.
-</p>
-</div>
-
-<div class="card">
-<h3>Naturaleza y biodiversidad</h3>
-<p>
-Conozca especies y ecosistemas adaptados a uno de los entornos más singulares del archipiélago.
-</p>
-</div>
-
-<div class="card">
-<h3>Historia escrita en el territorio</h3>
-<p>
-Vestigios arqueológicos y elementos tradicionales permiten comprender la relación entre las personas y el paisaje.
-</p>
-</div>
-
-<div class="card">
-<h3>Una experiencia exclusiva</h3>
-<p>
-Un recorrido interpretado por guías especializados que transforma el paisaje en una historia viva.
-</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section class="section stats">
-
-<div class="container">
-
-<h2 style="text-align:center;margin-bottom:20px;">
-Información práctica
-</h2>
-
-<p style="text-align:center;max-width:700px;margin:0 auto 50px;">
-Una experiencia guiada para descubrir la historia natural y humana de
-San Blas a través de un recorrido accesible para la mayoría de visitantes.
-</p>
-
-<div class="stats-grid">
-    <div class="stat">
-        <i class="fas fa-users stat-icon"></i>
-        <div class="stat-number">500000</div>
-        <h4>m² protegidos</h4>
-        <p>Uno de los mayores valores diferenciales de Barceló Tenerife.</p>
-    </div>
-
-    <div class="stat">
-        <i class="fas fa-route"></i>
-        <div class="stat-number">2500</div>
-        <h4>Metros de recorrido</h4>
-        <p>Senderos y espacios interpretativos.</p>
-    </div>
-
-    <div class="stat">
-        <i class="fas fa-mountain"></i>
-        <div class="stat-number">60</div>
-        <h4>Metros de desnivel</h4>
-        <p>Una ruta cómoda y accesible.</p>
-    </div>
-
-    <div class="stat">
-        <i class="fas fa-clock"></i>
-        <div class="stat-number">180</div>
-        <h4>Minutos</h4>
-        <p>Visita completa con guía especializado.</p>
-    </div>
-
-    <div class="stat">
-        <i class="fas fa-landmark"></i>
-        <div class="stat-number">1800</div>
-        <h4>Años de historia</h4>
-        <p>Patrimonio, cultura y territorio.</p>
-    </div>
-
-</div>
-
-</div>
-
-</section>
-
-<section class="section">
-
-<div class="container">
-
-<h2 style="text-align:center;">
-Recomendaciones
-</h2>
-
-<div class="recommendations">
-
-<div class="recommendation">
-<h3>Calzado cómodo</h3>
-<p>
-Se recomienda utilizar calzado adecuado para caminar por senderos naturales.
-</p>
-</div>
-
-<div class="recommendation">
-<h3>Agua</h3>
-<p>
-Lleve agua para mantenerse hidratado durante el recorrido.
-</p>
-</div>
-
-<div class="recommendation">
-<h3>Protección solar</h3>
-<p>
-La visita se desarrolla principalmente al aire libre.
-</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section class="cta">
-
-<p>
-DESCUBRA UNO DE LOS MAYORES TESOROS DE BARCELÓ TENERIFE
-</p>
-
-<h2>
-Naturaleza, patrimonio e historia en una experiencia única integrada en el hotel
-</h2>
-
-<a class="button"
-href="https://www.barcelo.com/guia-turismo/es/espana/tenerife/actividades/1121/">
-RESERVAR MI VISITA
-</a>
-
-</section>
-
-<footer class="footer">
-
-<h3>SAN BLAS RESERVA AMBIENTAL</h3>
-
-<p>Descubra la historia escrita en el paisaje</p>
-
-<p>
-Avenida Greñamora 1 · Urbanización San Blas · Tenerife
-</p>
-
-<p>
-tenerife.ambiental-res@barcelo.com
-</p>
-
-<p>
-+34 922 097 040
-</p>
-
-</footer>
-
-</body>
+        <section class="cta">
+            <p style="letter-spacing:2px;">UNA EXPERIENCIA EXCLUSIVA PARA NUESTROS HUÉSPEDES</p>
+            <h2>Descubra uno de los lugares más singulares de Canarias sin salir de Barceló Tenerife</h2>
+            <p style="max-width:700px;margin:25px auto 40px auto;">Volcanes, biodiversidad, arqueología, agua y patrimonio se unen en una visita guiada única que le permitirá conocer una cara diferente de Tenerife.</p>
+            <a class="button" href="https://www.barcelo.com/guia-turismo/es/espana/tenerife/actividades/1121/">RESERVAR PLAZA</a>
+            <p style="margin-top:25px;font-size:.95rem;color:#cccccc;">También puede reservar directamente en Guest Experience durante su estancia.</p>
+        </section>
+        
+        <footer class="footer">
+            <h3>SAN BLAS RESERVA AMBIENTAL</h3>
+            <p>Descubra la historia escrita en el paisaje</p>
+            <p>San Blas Reserva Ambiental · Barceló Tenerife</p>
+            <p>Avenida Greñamora 1 · 38639 · San Miguel de Abona · Tenerife</p>
+            <p>tenerife.ambiental-res@barcelo.com</p>
+            <p>+34 922 097 040</p>
+        </footer>
+    </body>
 </html>
