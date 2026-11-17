@@ -15,7 +15,7 @@ Vistas públicas: [correo en español](https://emailing.sanblasreservaambiental.
 
 Los HTML sirven para revisar y reutilizar el contenido. Los EML son borradores multipartes (HTML y texto), con `X-Unsent: 1` y sin destinatarios. Abrirlos en el cliente de correo compatible, revisar remitente y formato, añadir destinatarios y realizar un envío de prueba en Outlook/Gmail antes de distribuir. Generar o publicar estos archivos no envía ningún correo.
 
-Cada correo presenta brevemente las dos modalidades y las tarifas para huéspedes, incluye una ficha visual enlazada a la web y enlaces a los ocho idiomas. Los horarios, las condiciones y el formulario están en la ficha web. Al cierre, cinco estrellas enlazan a [FastReview](https://app.fastreview.pro/home/A5q3G8kVo1eM6Zr); son un enlace, no un selector de puntuación.
+Cada correo presenta brevemente las dos modalidades y destaca el descuento para huéspedes, dejando los precios en la web; incluye una ficha visual enlazada a la web y enlaces a los ocho idiomas. Los horarios, las condiciones y el formulario están en la ficha web. Al cierre, cinco estrellas enlazan a [FastReview](https://app.fastreview.pro/home/A5q3G8kVo1eM6Zr); son un enlace, no un selector de puntuación.
 
 ## Páginas web
 

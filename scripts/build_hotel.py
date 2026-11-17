@@ -169,8 +169,10 @@ for lang, d in DATA.items():
         'es': {
             'heading': d['title'],
             'intro': d['intro'],
-            'full': 'Visita completa: recorrido exterior e interiores. Adultos: 15 € · Niños de 3 a 11 años: 8 €.',
-            'inside': 'La opción cómoda: solo interiores, sin caminar por el barranco. 10 € por persona.',
+            'fullTitle': 'Visita completa · Naturaleza e historia',
+            'full': 'Paseo guiado por la Reserva Ambiental y visita al Centro de Interpretación, el Museo y el Túnel de la Experiencia Histórica.',
+            'insideTitle': 'Solo interiores · La opción cómoda',
+            'inside': 'Visita guiada al Centro de Interpretación, el Museo y el Túnel de la Experiencia Histórica, sin recorrido exterior.',
             'cardTitle': 'Dos formas de descubrir San Blas',
             'cardText': 'Conozca las dos modalidades y consulte horarios, disponibilidad y opciones de reserva en la ficha de la actividad.',
             'cta': 'Ver la actividad y reservar',
@@ -181,8 +183,10 @@ for lang, d in DATA.items():
         'en': {
             'heading': d['title'],
             'intro': d['intro'],
-            'full': 'Complete visit: outdoor route and indoor spaces. Adults: €15 · Children aged 3–11: €8.',
-            'inside': 'The comfortable option: indoor spaces only, without walking through the ravine. €10 per person.',
+            'fullTitle': 'Complete visit · Nature and history',
+            'full': 'A guided walk through the Environmental Reserve, followed by the Interpretation Centre, Museum and Historical Experience Tunnel.',
+            'insideTitle': 'Indoor visit · The comfortable option',
+            'inside': 'A guided visit to the Interpretation Centre, Museum and Historical Experience Tunnel, without the outdoor walk.',
             'cardTitle': 'Two ways to discover San Blas',
             'cardText': 'Explore both options and check schedules, availability and booking options on the activity page.',
             'cta': 'Explore the activity and book',
@@ -202,7 +206,7 @@ for lang, d in DATA.items():
 <!--[if mso]><table role="presentation" width="600"><tr><td><![endif]-->
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px">
 <tr><td style="padding:0 0 16px;font-size:13px"><a href="{email_url}" style="color:#574c43">{e(d['browser'])}</a></td></tr>
-<tr><td><p>{e(d['greeting'])}</p><h1 style="font:700 26px/1.25 Arial,sans-serif">{e(email_copy['heading'])}</h1><p>{e(email_copy['intro'])}</p><p style="background:#eee3c9;padding:16px;margin:20px 0 8px;font-weight:bold">{e(d['offer'])}<br><a href="{hotel_url(lang)}#discount-note" style="font-size:12px;font-weight:normal;color:#574c43">{e(d['offerNote'])}</a></p><p><b>{e(d['limited'])}</b></p><ul style="padding-left:22px"><li>{e(email_copy['full'])}</li><li>{e(email_copy['inside'])}</li></ul></td></tr>
+<tr><td><p>{e(d['greeting'])}</p><h1 style="font:700 26px/1.25 Arial,sans-serif">{e(email_copy['heading'])}</h1><p>{e(email_copy['intro'])}</p><p style="background:#eee3c9;padding:16px;margin:20px 0 8px;font-weight:bold">{e(d['offer'])}<br><a href="{hotel_url(lang)}#discount-note" style="font-size:12px;font-weight:normal;color:#574c43">{e(d['offerNote'])}</a></p><p><b>{e(d['limited'])}</b></p><p><b>{e(email_copy['fullTitle'])}</b><br>{e(email_copy['full'])}</p><p><b>{e(email_copy['insideTitle'])}</b><br>{e(email_copy['inside'])}</p></td></tr>
 <tr><td style="padding:8px 0 16px">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #d8ccb4;background:#ffffff">
 <tr><td><a href="{hotel_url(lang)}"><img src="{SHARE_IMAGE}" alt="{e(d['heroAlt'])}" width="600" height="315" style="display:block;border:0;width:100%;max-width:600px;height:auto"></a></td></tr>
@@ -211,7 +215,7 @@ for lang, d in DATA.items():
 </td></tr></table></td></tr>
 <tr><td><p style="font-size:13px"><b>{e(email_copy['languages'])}</b><br>{language_links}</p><p>{e(d['signoff'])}<br><b>San Blas Reserva Ambiental · Barceló Tenerife</b><br><a href="mailto:{ADDRESS}" style="color:#574c43">{ADDRESS}</a></p><p style="border-top:1px solid #d8ccb4;padding-top:16px;font-size:15px"><b>{e(email_copy['reviewHeading'])}</b><br>{e(email_copy['reviewCta'])}<br><a href="{REVIEW_URL}" aria-label="{e(email_copy['reviewCta'])}" title="{e(email_copy['reviewCta'])}" style="display:inline-block;padding:8px 0;color:#9a640c;font:30px/1.5 Arial,sans-serif;letter-spacing:4px;text-decoration:none">★★★★★</a></p><p style="font-size:12px"><a href="mailto:{ADDRESS}?subject=BAJA" style="color:#574c43">{e(d['unsubscribe'])}</a></p></td></tr>
 </table><!--[if mso]></td></tr></table><![endif]--></td></tr></table></body></html>'''
-    plain = '\n\n'.join([d['greeting'], email_copy['heading'], email_copy['intro'], d['offer'], d['offerNote']+' '+hotel_url(lang)+'#discount-note', d['limited'], email_copy['full'], email_copy['inside'], email_copy['cardText'], email_copy['cta']+': '+hotel_url(lang), email_copy['languages'], language_text, d['signoff'], 'San Blas Reserva Ambiental · Barceló Tenerife', ADDRESS, email_copy['reviewHeading'], email_copy['reviewCta']+'\n★★★★★ '+REVIEW_URL, d['unsubscribe']])
+    plain = '\n\n'.join([d['greeting'], email_copy['heading'], email_copy['intro'], d['offer'], d['offerNote']+' '+hotel_url(lang)+'#discount-note', d['limited'], email_copy['fullTitle'], email_copy['full'], email_copy['insideTitle'], email_copy['inside'], email_copy['cardText'], email_copy['cta']+': '+hotel_url(lang), email_copy['languages'], language_text, d['signoff'], 'San Blas Reserva Ambiental · Barceló Tenerife', ADDRESS, email_copy['reviewHeading'], email_copy['reviewCta']+'\n★★★★★ '+REVIEW_URL, d['unsubscribe']])
     # Fuentes de marca con alternativas para clientes sin fuentes web.
     email_html = email_html.replace('Arial,Helvetica,sans-serif', "'Source Serif 4',Georgia,serif").replace('Arial,sans-serif', 'K2D,Arial,sans-serif').replace('K2D,K2D,', 'K2D,')
     stem = EMAIL_OUT / lang
