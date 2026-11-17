@@ -1,6 +1,7 @@
 # HTML must remain crawlable so search engines can read noindex, nofollow.
 User-agent: *
 Disallow: /assets/
+Allow: /assets/img/hotel-compartir.jpg
 Disallow: /scripts/
 Disallow: /docs/
 Disallow: /*.json$

@@ -92,3 +92,9 @@ Los índices de `/`, `/mailing/` y `/mailing/emails/` no muestran contenido ni e
 ## Rutas de hotel
 
 `/hotel/` muestra inglés. Las otras versiones están en `/hotel/es/`, `/hotel/fr/`, `/hotel/de/`, `/hotel/nl/`, `/hotel/ru/`, `/hotel/it/` y `/hotel/pl/`. `/hotel/en/` también ofrece inglés. Los correos y las banderas usan estas rutas. El índice raíz queda vacío. Las páginas antiguas siguen disponibles para conservar enlaces compartidos. Todas mantienen `noindex, nofollow, noarchive`.
+
+## Correo breve y vistas al compartir
+
+Los dos correos presentan la actividad con las tarifas para huéspedes y una ficha visual enlazada a la web; los detalles y el formulario quedan en la página. HTML, TXT y EML incluyen enlaces a los ocho idiomas.
+
+Las páginas de hotel, sus versiones anteriores y las vistas HTML del correo incorporan Open Graph y Twitter Card con textos localizados e imagen compartida `assets/img/hotel-compartir.jpg` (1200 × 630). La imagen está permitida en robots para las vistas previas; se conserva `noindex, nofollow, noarchive`. Los índices vacíos no tienen ficha de compartir.

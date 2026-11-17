@@ -31,6 +31,23 @@ FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="p
 EXPERIENCES = {key: 'https://www.barcelo.com/guia-turismo/es/espana/tenerife/actividades/' + code + '/'
                for key, code in [('full', '1121'), ('inside', '104')]}
 
+SHARE_IMAGE = 'https://emailing.sanblasreservaambiental.org/assets/img/hotel-compartir.jpg'
+LOCALES = {'es':'es_ES','en':'en_GB','fr':'fr_FR','de':'de_DE','nl':'nl_NL','ru':'ru_RU','it':'it_IT','pl':'pl_PL'}
+
+def social_meta(d, lang, url):
+    title = d['title'] + ' · San Blas Reserva Ambiental'
+    description = d['intro'] + ' ' + d['offer']
+    return f'''<meta property="og:type" content="website">
+<meta property="og:site_name" content="San Blas Reserva Ambiental">
+<meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(description)}">
+<meta property="og:url" content="{e(url)}"><meta property="og:locale" content="{LOCALES[lang]}">
+<meta property="og:image" content="{SHARE_IMAGE}"><meta property="og:image:secure_url" content="{SHARE_IMAGE}">
+<meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{e(d['heroAlt'])}">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{e(title)}">
+<meta name="twitter:description" content="{e(description)}"><meta name="twitter:image" content="{SHARE_IMAGE}"><meta name="twitter:image:alt" content="{e(d['heroAlt'])}">'''
+
+
 def icon(name):
     paths = {
         'arrow':'<path d="M5 12h14m-6-6 6 6-6 6"/>',
@@ -123,9 +140,7 @@ for lang, d in DATA.items():
 <title>{e(d['title'])} · San Blas Reserva Ambiental</title><meta name="description" content="{e(d['intro'])}">
 <link rel="canonical" href="{hotel_url(lang)}">{alternates}
 <link rel="icon" type="image/png" href="../../assets/img/logo-reserva.png">{FONTS}<link rel="stylesheet" href="hotel.css">
-<meta property="og:title" content="{e(d['title'])}"><meta property="og:description" content="{e(d['intro'])}">
-<meta property="og:image" content="https://emailing.sanblasreservaambiental.org/assets/img/hotel-presa.jpg">
-<meta property="og:url" content="{hotel_url(lang)}"><meta property="og:type" content="website"></head>
+{social_meta(d,lang,hotel_url(lang))}</head>
 <body><a class="skip" href="#main">{e(d['skip'])}</a>
 <main id="main"><section class="hero"><img src="../../assets/img/hotel-presa.jpg" alt="{e(d['heroAlt'])}" width="1380" height="900" srcset="../../assets/img/hotel-presa-800.jpg 800w, ../../assets/img/hotel-presa.jpg 1380w" sizes="100vw" fetchpriority="high">
 <header class="top"><div class="wrap"><a class="brand" href="{hotel_url(lang)}"><img src="../../assets/img/logo-blanco.png" width="160" height="160" alt="San Blas Reserva Ambiental · Tenerife"></a><nav class="languages" aria-label="{e(d['languagesLabel'])}">{nav}</nav></div></header>
@@ -147,35 +162,56 @@ for lang, d in DATA.items():
 
     if lang not in ('es', 'en'):
         continue
-    # El envío usa tablas y estilos en línea. No depende del CSS de la web.
-    blocks = ''
-    for key in ('full', 'inside'):
-        blocks += f'<tr><td style="padding:26px 28px;border-top:1px solid #d8ccb4"><p style="color:#a8492a;font:bold 12px Arial,sans-serif">{e(d[key+"Tag"])}</p><h2 style="font:700 24px Arial,sans-serif;color:#1a1614">{e(d[key])}</h2>{price(d,key,True)}<p><b>{e(d[key+"Schedule"])}</b><br>{e(d['durationLabel'])}: {e(d[key+'Duration'])}<br>{e(d["limited"])}</p><p>{e(d[key+"Text"])}</p><p>{e(d[key+"Note"])}</p>{booking(d,key,True)}</td></tr>'
-    email_html = f'''<!doctype html><html lang="{lang}"><head><meta name="robots" content="noindex, nofollow, noarchive"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>{e(d['subject'])}</title>{FONTS}</head>
+    email_copy = {
+        'es': {
+            'heading': 'Descubra la Reserva Ambiental de San Blas',
+            'intro': 'Durante su estancia, descubra los paisajes y la historia de San Blas con una visita guiada. Como huésped de Barceló Tenerife, disfrute de la tarifa de residente.',
+            'full': 'Visita completa: recorrido exterior e interiores. Adultos: 15 € · Niños de 3 a 11 años: 8 €.',
+            'inside': 'La opción cómoda: solo interiores, sin caminar por el barranco. 10 € por persona.',
+            'cardTitle': 'Dos formas de descubrir San Blas',
+            'cardText': 'Conozca las dos modalidades y consulte horarios, disponibilidad y opciones de reserva en la ficha de la actividad.',
+            'cta': 'Ver la actividad y reservar',
+            'languages': 'La ficha está disponible en ocho idiomas',
+        },
+        'en': {
+            'heading': 'Discover the San Blas Environmental Reserve',
+            'intro': 'During your stay, explore the landscapes and history of San Blas on a guided visit. As a Barceló Tenerife guest, enjoy the resident rate.',
+            'full': 'Complete visit: outdoor route and indoor spaces. Adults: €15 · Children aged 3–11: €8.',
+            'inside': 'The comfortable option: indoor spaces only, without walking through the ravine. €10 per person.',
+            'cardTitle': 'Two ways to discover San Blas',
+            'cardText': 'Explore both options and check schedules, availability and booking options on the activity page.',
+            'cta': 'Explore the activity and book',
+            'languages': 'The activity page is available in eight languages',
+        },
+    }[lang]
+    language_links = ' · '.join(f'<a style="color:#574c43;line-height:2" lang="{code}" href="{hotel_url(code)}">{e(v["name"])}</a>' for code,v in DATA.items())
+    language_text = '\n'.join(f'{v["name"]}: {hotel_url(code)}' for code,v in DATA.items())
+    email_url = 'https://emailing.sanblasreservaambiental.org/mailing/emails/correo-huespedes-' + lang + '.html'
+    # Breve presentación y ficha enlazada, con tablas y estilos en línea para correo.
+    email_html = f'''<!doctype html><html lang="{lang}"><head><meta charset="utf-8"><meta name="robots" content="noindex, nofollow, noarchive"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{e(email_copy['heading'])}</title>{FONTS}{social_meta(d,lang,email_url)}</head>
 <body style="margin:0;background:#faf8f3;color:#1a1614;font:16px/1.6 Arial,Helvetica,sans-serif">
-<div style="display:none;max-height:0;overflow:hidden;mso-hide:all">{e(d['offer'])} {e(d['limited'])}</div>
+<div style="display:none;max-height:0;overflow:hidden;mso-hide:all">{e(email_copy['intro'])}</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="padding:20px 8px">
 <!--[if mso]><table role="presentation" width="600"><tr><td><![endif]-->
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;background:white;border:1px solid #d8ccb4">
-<tr><td style="padding:16px 28px;font-size:13px"><a style="color:#574c43" href="{hotel_url(lang)}">{e(d['browser'])}</a><br>
-{' · '.join(f'<a style="color:#574c43" href="{hotel_url(code)}">{e(v["name"])}</a>' for code,v in DATA.items())}</td></tr>
-<tr><td bgcolor="#1a1614" style="padding:20px 28px;color:#eee3c9;font-weight:bold"><img src="https://emailing.sanblasreservaambiental.org/assets/img/logo-blanco.png" width="140" height="140" alt="San Blas Reserva Ambiental · Tenerife" style="display:block;border:0"><span style="font-weight:normal">Barceló Tenerife</span></td></tr>
-<tr><td><img src="https://emailing.sanblasreservaambiental.org/assets/img/hotel-presa.jpg" alt="{e(d['heroAlt'])}" width="600" style="display:block;width:100%;max-width:600px;height:auto;border:0"></td></tr>
-<tr><td style="padding:28px"><p>{e(d['greeting'])}</p><h1 style="font:700 30px/1.15 Arial,sans-serif">{e(d['title'])}</h1><p style="background:#eee3c9;padding:16px;font-weight:bold">{e(d['offer'])}<br><small style="font-weight:normal">{e(d['offerNote'])}</small></p><p>{e(d['intro'])}</p><h2 style="font:700 24px Arial,sans-serif">{e(d['choose'])}</h2><p>{e(d['lead'])}</p></td></tr>{blocks}
-<tr><td bgcolor="#eee3c9" style="padding:26px 28px"><h2 style="font:700 22px Arial,sans-serif">{e(d['practical'])}</h2><p><b>{e(d['meetingLabel'])}:</b> {e(d['meetingPoint'])}</p><p>{e(d['details'])}</p><p>{e(d['access'])}</p><p>{e(d['bookingForm']['cutoffNote'])}</p></td></tr>
-<tr><td style="padding:26px 28px"><p>{e(d['contactText'])}</p>{email_other_options(d)}<p>{e(d['signoff'])}<br><b>San Blas Reserva Ambiental · Barceló Tenerife</b></p><p><a style="color:#1a1614" href="mailto:{ADDRESS}">{ADDRESS}</a><br><a style="color:#1a1614" href="tel:+34922097040">+34 922 097 040</a></p><p style="font-size:13px">Avenida Greñamora 1 · 38639 · San Miguel de Abona · Tenerife</p><p style="font-size:12px;color:#574c43;border-top:1px solid #d8ccb4;padding-top:16px"><b>¹ {e(d['discountTitle'])}.</b> {e(d['discountNote'])}</p><p style="font-size:12px"><a style="color:#574c43" href="mailto:{ADDRESS}?subject=BAJA">{e(d['unsubscribe'])}</a></p></td></tr>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px">
+<tr><td style="padding:0 0 16px;font-size:13px"><a href="{email_url}" style="color:#574c43">{e(d['browser'])}</a></td></tr>
+<tr><td><p>{e(d['greeting'])}</p><h1 style="font:700 26px/1.25 Arial,sans-serif">{e(email_copy['heading'])}</h1><p>{e(email_copy['intro'])}</p><ul style="padding-left:22px"><li>{e(email_copy['full'])}</li><li>{e(email_copy['inside'])}</li></ul></td></tr>
+<tr><td style="padding:8px 0 16px">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #d8ccb4;background:#ffffff">
+<tr><td><a href="{hotel_url(lang)}"><img src="{SHARE_IMAGE}" alt="{e(d['heroAlt'])}" width="600" height="315" style="display:block;border:0;width:100%;max-width:600px;height:auto"></a></td></tr>
+<tr><td style="padding:22px"><p style="margin:0 0 8px;color:#574c43;font-size:12px">San Blas Reserva Ambiental · Barceló Tenerife</p><h2 style="margin:0 0 10px;font:700 23px/1.3 Arial,sans-serif">{e(email_copy['cardTitle'])}</h2><p style="margin:0 0 18px">{e(email_copy['cardText'])}</p>
+<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td bgcolor="#eee3c9" style="padding:12px 20px;border-radius:24px"><a href="{hotel_url(lang)}" style="font:bold 16px Arial,sans-serif;color:#1a1614;text-decoration:none">{e(email_copy['cta'])} →</a></td></tr></table>
+</td></tr></table></td></tr>
+<tr><td><p style="font-size:13px"><b>{e(email_copy['languages'])}</b><br>{language_links}</p><p>{e(d['signoff'])}<br><b>San Blas Reserva Ambiental · Barceló Tenerife</b><br><a href="mailto:{ADDRESS}" style="color:#574c43">{ADDRESS}</a></p><p style="font-size:12px"><a href="mailto:{ADDRESS}?subject=BAJA" style="color:#574c43">{e(d['unsubscribe'])}</a></p></td></tr>
 </table><!--[if mso]></td></tr></table><![endif]--></td></tr></table></body></html>'''
-    plain_blocks = []
-    for key in ('full', 'inside'):
-        plain_blocks += [d[key+'Tag']+' — '+d[key], d[key+'Price']+' · '+d['rateLabel']+(' · '+d['adultLabel'] if key=='full' else ''), d['fullRates']+' · '+d['fullComparison'] if key=='full' else d['insideRates'], d[key+'Schedule'], d['durationLabel']+': '+d[key+'Duration'], d['limited'], d[key+'Text'], d[key+'Note'], d[key+'Cta'], hotel_url(lang)+'?modalidad='+key+'#reserve']
-    plain = '\n\n'.join([d['greeting'], d['title'], d['offer'], d['offerNote'], d['intro'], d['lead']] + plain_blocks + [d['meetingLabel']+': '+d['meetingPoint'], d['details'], d['access'], d['bookingForm']['cutoffNote'], d['contactText'], d['receptionPhone'], d['receptionExternalPhone'], 'Barceló Experiences · '+d['full']+': '+EXPERIENCES['full'], 'Barceló Experiences · '+d['inside']+': '+EXPERIENCES['inside'], hotel_url(lang), ADDRESS+' · +34 922 097 040', d['discountTitle'], d['discountNote'],d['unsubscribe']])
+    plain = '\n\n'.join([d['greeting'], email_copy['heading'], email_copy['intro'], email_copy['full'], email_copy['inside'], email_copy['cardText'], email_copy['cta']+': '+hotel_url(lang), email_copy['languages'], language_text, d['signoff'], 'San Blas Reserva Ambiental · Barceló Tenerife', ADDRESS, d['unsubscribe']])
     # Fuentes de marca con alternativas para clientes sin fuentes web.
     email_html = email_html.replace('Arial,Helvetica,sans-serif', "'Source Serif 4',Georgia,serif").replace('Arial,sans-serif', 'K2D,Arial,sans-serif').replace('K2D,K2D,', 'K2D,')
     stem = OUT / f'correo-huespedes-{lang}'
     stem.with_suffix('.html').write_text(email_html, encoding='utf-8')
     stem.with_suffix('.txt').write_text(plain, encoding='utf-8')
     msg = EmailMessage(policy=policy.SMTP)
-    msg['Subject'] = d['subject']
+    msg['Subject'] = email_copy['heading'] + (' · Tarifa especial para huéspedes' if lang == 'es' else ' · Special rates for hotel guests')
     msg['From'] = f'San Blas Reserva Ambiental <{ADDRESS}>'
     msg['X-Unsent'] = '1'
     msg.set_content(plain)
