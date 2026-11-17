@@ -88,3 +88,7 @@ Todas las páginas HTML incluyen `noindex, nofollow, noarchive`, también las ge
 ## Índices vacíos
 
 Los índices de `/`, `/mailing/` y `/mailing/emails/` no muestran contenido ni enlaces. Las ocho páginas de idioma permanecen en `/mailing/emails/intern_email_2.0_{idioma}.html`, accesibles por enlace directo y con exclusión de buscadores. El generador conserva los índices vacíos.
+
+## Rutas de hotel
+
+`/hotel/` muestra inglés. Las otras versiones están en `/hotel/es/`, `/hotel/fr/`, `/hotel/de/`, `/hotel/nl/`, `/hotel/ru/`, `/hotel/it/` y `/hotel/pl/`. `/hotel/en/` también ofrece inglés. Los correos y las banderas usan estas rutas. El índice raíz queda vacío. Las páginas antiguas siguen disponibles para conservar enlaces compartidos. Todas mantienen `noindex, nofollow, noarchive`.

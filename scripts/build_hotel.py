@@ -21,7 +21,11 @@ for dates in [AVAILABILITY['closedDates'], AVAILABILITY['fullyBookedDates']['ful
     for value in dates:
         if not isinstance(value, str) or date.fromisoformat(value).isoformat() != value:
             raise ValueError(f'Fecha no válida en booking-availability.json: {value!r}. Usar AAAA-MM-DD.')
-BASE = 'https://emailing.sanblasreservaambiental.org/mailing/emails/'
+BASE = 'https://emailing.sanblasreservaambiental.org/hotel/'
+
+def hotel_url(lang):
+    return BASE if lang == 'en' else BASE + lang + '/'
+
 ADDRESS = 'tenerife.ambiental-res@barcelo.com'
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=K2D:wght@400;500;700&amp;family=Source+Serif+4:wght@400;600&amp;display=swap" rel="stylesheet">'
 EXPERIENCES = {key: 'https://www.barcelo.com/guia-turismo/es/espana/tenerife/actividades/' + code + '/'
@@ -45,14 +49,14 @@ def button(label, url):
     return f'<a class="button" href="{e(url)}">{icon("arrow")}<span>{e(label)}</span></a>'
 
 def booking(d, key, email=False):
-    url = (BASE + f'intern_email_2.0_{lang}.html?modalidad={key}#reserve') if email else '#reserve'
+    url = (hotel_url(lang) + f'?modalidad={key}#reserve') if email else '#reserve'
     symbol = '🥾' if key == 'full' else '🏛'
     if email:
         return f'<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td bgcolor="#eee3c9" style="padding:14px 20px;border-radius:10px"><a href="{e(url)}" style="font:bold 16px K2D,Arial,sans-serif;color:#1a1614;text-decoration:none"><span aria-hidden="true">{symbol}</span> {e(d[key+"Cta"])} →</a></td></tr></table>'
     return f'<a class="button" href="{url}" data-option="{key}">{icon("leaf" if key=="full" else "inside")}<span>{e(d[key+"Cta"])}</span></a>'
 
 def email_other_options(d):
-    return f'<h2 style="font:700 22px K2D,Arial,sans-serif">{e(d["onlineTitle"])}</h2><p><a style="color:#1a1614" href="{EXPERIENCES["full"]}">{e(d["full"])}</a><br><a style="color:#1a1614" href="{EXPERIENCES["inside"]}">{e(d["inside"])}</a></p><h2 style="font:700 22px K2D,Arial,sans-serif">{e(d["hotelTitle"])}</h2><p>{e(d["receptionPhone"])}<br><a style="color:#1a1614" href="tel:+34922749010">{e(d["receptionExternalPhone"])}</a></p><h2 style="font:700 22px K2D,Arial,sans-serif">{e(d["directTitle"])}</h2><p><a style="color:#1a1614" href="{BASE}intern_email_2.0_{lang}.html#reserve">{e(d["bookingForm"]["title"])}</a></p>'
+    return f'<h2 style="font:700 22px K2D,Arial,sans-serif">{e(d["onlineTitle"])}</h2><p><a style="color:#1a1614" href="{EXPERIENCES["full"]}">{e(d["full"])}</a><br><a style="color:#1a1614" href="{EXPERIENCES["inside"]}">{e(d["inside"])}</a></p><h2 style="font:700 22px K2D,Arial,sans-serif">{e(d["hotelTitle"])}</h2><p>{e(d["receptionPhone"])}<br><a style="color:#1a1614" href="tel:+34922749010">{e(d["receptionExternalPhone"])}</a></p><h2 style="font:700 22px K2D,Arial,sans-serif">{e(d["directTitle"])}</h2><p><a style="color:#1a1614" href="{hotel_url(lang)}#reserve">{e(d["bookingForm"]["title"])}</a></p>'
 
 def reservation_section(d):
     return f'''<section class="content reservation" id="reserve"><div class="wrap"><h2>{e(d['bookingTitle'])}</h2><p id="booking-selected-visit" class="selected-visit" role="status"></p>
@@ -103,9 +107,9 @@ def price(d, key, email=False):
 
 for lang, d in DATA.items():
     name = f'intern_email_2.0_{lang}.html'
-    nav = ' '.join(f'<a href="intern_email_2.0_{code}.html" lang="{code}" hreflang="{code}" title="{e(v["name"])}" aria-label="{e(v["name"])}"'
+    nav = ' '.join(f'<a href="{hotel_url(code)}" lang="{code}" hreflang="{code}" title="{e(v["name"])}" aria-label="{e(v["name"])}"'
                    + (' aria-current="page"' if code == lang else '') + f'><img src="../../assets/flags/{code}.svg" width="32" height="32" alt=""></a>' for code, v in DATA.items())
-    alternates = '\n'.join(f'<link rel="alternate" hreflang="{code}" href="{BASE}intern_email_2.0_{code}.html">' for code in DATA)
+    alternates = '\n'.join(f'<link rel="alternate" hreflang="{code}" href="{hotel_url(code)}">' for code in DATA)
     cards = ''
     for key, img, alt in [('full', 'hotel-barranco.webp', 'fullAlt'), ('inside', 'hotel-centro.webp', 'insideAlt')]:
         cards += f'''<article class="option" id="{key}">
@@ -117,14 +121,14 @@ for lang, d in DATA.items():
     page = f'''<!doctype html>
 <html lang="{lang}"><head><meta name="robots" content="noindex, nofollow, noarchive"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{e(d['title'])} · San Blas Reserva Ambiental</title><meta name="description" content="{e(d['intro'])}">
-<link rel="canonical" href="{BASE}{name}">{alternates}
+<link rel="canonical" href="{hotel_url(lang)}">{alternates}
 <link rel="icon" type="image/png" href="../../assets/img/logo-reserva.png">{FONTS}<link rel="stylesheet" href="hotel.css">
 <meta property="og:title" content="{e(d['title'])}"><meta property="og:description" content="{e(d['intro'])}">
 <meta property="og:image" content="https://emailing.sanblasreservaambiental.org/assets/img/hotel-presa.jpg">
-<meta property="og:url" content="{BASE}{name}"><meta property="og:type" content="website"></head>
+<meta property="og:url" content="{hotel_url(lang)}"><meta property="og:type" content="website"></head>
 <body><a class="skip" href="#main">{e(d['skip'])}</a>
 <main id="main"><section class="hero"><img src="../../assets/img/hotel-presa.jpg" alt="{e(d['heroAlt'])}" width="1380" height="900" srcset="../../assets/img/hotel-presa-800.jpg 800w, ../../assets/img/hotel-presa.jpg 1380w" sizes="100vw" fetchpriority="high">
-<header class="top"><div class="wrap"><a class="brand" href="{name}"><img src="../../assets/img/logo-blanco.png" width="160" height="160" alt="San Blas Reserva Ambiental · Tenerife"></a><nav class="languages" aria-label="{e(d['languagesLabel'])}">{nav}</nav></div></header>
+<header class="top"><div class="wrap"><a class="brand" href="{hotel_url(lang)}"><img src="../../assets/img/logo-blanco.png" width="160" height="160" alt="San Blas Reserva Ambiental · Tenerife"></a><nav class="languages" aria-label="{e(d['languagesLabel'])}">{nav}</nav></div></header>
 <div class="wrap hero-copy"><p class="kicker">{e(d['kicker'])}</p><h1>{e(d['title'])}</h1><p>{e(d['intro'])}</p><p class="offer">{e(d['offer'])}<small><a href="#discount-note">{e(d['offerNote'])}</a></small></p><p>{e(d['limited'])}</p>{button(d['choose'], '#options')}</div></section>
 <section class="content" id="options"><div class="wrap"><div class="intro"><h2>{e(d['choose'])}</h2><p>{e(d['lead'])}</p></div><div class="options">{cards}</div></div></section>
 <section class="content practical"><div class="wrap"><h2>{e(d['practical'])}</h2><p><strong>{e(d['meetingLabel'])}:</strong> {e(d['meetingPoint'])}</p><p>{e(d['details'])}</p><p>{e(d['access'])}</p></div></section>
@@ -133,6 +137,13 @@ for lang, d in DATA.items():
 <p style="margin-top:24px"><a href="mailto:{ADDRESS}">{ADDRESS}</a><br><a href="tel:+34922097040">+34 922 097 040</a></p></div></section></main>
 <footer>San Blas Reserva Ambiental · Barceló Tenerife<br>Avenida Greñamora 1 · 38639 · San Miguel de Abona · Tenerife<p class="discount-note" id="discount-note"><strong>¹ {e(d['discountTitle'])}.</strong> {e(d['discountNote'])}</p></footer></body></html>'''
     (OUT / name).write_text(page, encoding='utf-8')
+    destination = ROOT / 'hotel' / lang
+    destination.mkdir(parents=True, exist_ok=True)
+    nested_page = page.replace('src="hotel-booking.js"', 'src="../../mailing/emails/hotel-booking.js"').replace('href="hotel.css"', 'href="../../mailing/emails/hotel.css"')
+    (destination / 'index.html').write_text(nested_page, encoding='utf-8')
+    if lang == 'en':
+        english_root = page.replace('../../assets/', '../assets/').replace('src="hotel-booking.js"', 'src="../mailing/emails/hotel-booking.js"').replace('href="hotel.css"', 'href="../mailing/emails/hotel.css"')
+        (ROOT / 'hotel' / 'index.html').write_text(english_root, encoding='utf-8')
 
     if lang not in ('es', 'en'):
         continue
@@ -146,8 +157,8 @@ for lang, d in DATA.items():
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="padding:20px 8px">
 <!--[if mso]><table role="presentation" width="600"><tr><td><![endif]-->
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;background:white;border:1px solid #d8ccb4">
-<tr><td style="padding:16px 28px;font-size:13px"><a style="color:#574c43" href="{BASE}{name}">{e(d['browser'])}</a><br>
-{' · '.join(f'<a style="color:#574c43" href="{BASE}intern_email_2.0_{code}.html">{e(v["name"])}</a>' for code,v in DATA.items())}</td></tr>
+<tr><td style="padding:16px 28px;font-size:13px"><a style="color:#574c43" href="{hotel_url(lang)}">{e(d['browser'])}</a><br>
+{' · '.join(f'<a style="color:#574c43" href="{hotel_url(code)}">{e(v["name"])}</a>' for code,v in DATA.items())}</td></tr>
 <tr><td bgcolor="#1a1614" style="padding:20px 28px;color:#eee3c9;font-weight:bold"><img src="https://emailing.sanblasreservaambiental.org/assets/img/logo-blanco.png" width="140" height="140" alt="San Blas Reserva Ambiental · Tenerife" style="display:block;border:0"><span style="font-weight:normal">Barceló Tenerife</span></td></tr>
 <tr><td><img src="https://emailing.sanblasreservaambiental.org/assets/img/hotel-presa.jpg" alt="{e(d['heroAlt'])}" width="600" style="display:block;width:100%;max-width:600px;height:auto;border:0"></td></tr>
 <tr><td style="padding:28px"><p>{e(d['greeting'])}</p><h1 style="font:700 30px/1.15 Arial,sans-serif">{e(d['title'])}</h1><p style="background:#eee3c9;padding:16px;font-weight:bold">{e(d['offer'])}<br><small style="font-weight:normal">{e(d['offerNote'])}</small></p><p>{e(d['intro'])}</p><h2 style="font:700 24px Arial,sans-serif">{e(d['choose'])}</h2><p>{e(d['lead'])}</p></td></tr>{blocks}
@@ -156,8 +167,8 @@ for lang, d in DATA.items():
 </table><!--[if mso]></td></tr></table><![endif]--></td></tr></table></body></html>'''
     plain_blocks = []
     for key in ('full', 'inside'):
-        plain_blocks += [d[key+'Tag']+' — '+d[key], d[key+'Price']+' · '+d['rateLabel']+(' · '+d['adultLabel'] if key=='full' else ''), d['fullRates']+' · '+d['fullComparison'] if key=='full' else d['insideRates'], d[key+'Schedule'], d['durationLabel']+': '+d[key+'Duration'], d['limited'], d[key+'Text'], d[key+'Note'], d[key+'Cta'], BASE+name+'?modalidad='+key+'#reserve']
-    plain = '\n\n'.join([d['greeting'], d['title'], d['offer'], d['offerNote'], d['intro'], d['lead']] + plain_blocks + [d['meetingLabel']+': '+d['meetingPoint'], d['details'], d['access'], d['bookingForm']['cutoffNote'], d['contactText'], d['receptionPhone'], d['receptionExternalPhone'], 'Barceló Experiences · '+d['full']+': '+EXPERIENCES['full'], 'Barceló Experiences · '+d['inside']+': '+EXPERIENCES['inside'], BASE+name, ADDRESS+' · +34 922 097 040', d['discountTitle'], d['discountNote'],d['unsubscribe']])
+        plain_blocks += [d[key+'Tag']+' — '+d[key], d[key+'Price']+' · '+d['rateLabel']+(' · '+d['adultLabel'] if key=='full' else ''), d['fullRates']+' · '+d['fullComparison'] if key=='full' else d['insideRates'], d[key+'Schedule'], d['durationLabel']+': '+d[key+'Duration'], d['limited'], d[key+'Text'], d[key+'Note'], d[key+'Cta'], hotel_url(lang)+'?modalidad='+key+'#reserve']
+    plain = '\n\n'.join([d['greeting'], d['title'], d['offer'], d['offerNote'], d['intro'], d['lead']] + plain_blocks + [d['meetingLabel']+': '+d['meetingPoint'], d['details'], d['access'], d['bookingForm']['cutoffNote'], d['contactText'], d['receptionPhone'], d['receptionExternalPhone'], 'Barceló Experiences · '+d['full']+': '+EXPERIENCES['full'], 'Barceló Experiences · '+d['inside']+': '+EXPERIENCES['inside'], hotel_url(lang), ADDRESS+' · +34 922 097 040', d['discountTitle'], d['discountNote'],d['unsubscribe']])
     # Fuentes de marca con alternativas para clientes sin fuentes web.
     email_html = email_html.replace('Arial,Helvetica,sans-serif', "'Source Serif 4',Georgia,serif").replace('Arial,sans-serif', 'K2D,Arial,sans-serif').replace('K2D,K2D,', 'K2D,')
     stem = OUT / f'correo-huespedes-{lang}'

@@ -28,7 +28,7 @@ Incluye una caminata por senderos naturales. Recomendamos calzado adecuado, agua
 
 Reservar visita completa
 
-https://emailing.sanblasreservaambiental.org/mailing/emails/intern_email_2.0_es.html?modalidad=full#reserve
+https://emailing.sanblasreservaambiental.org/hotel/es/?modalidad=full#reserve
 
 Solo interiores — La opción cómoda
 
@@ -48,7 +48,7 @@ Una alternativa para quienes prefieren conocer San Blas sin caminar por el barra
 
 Reservar solo interiores
 
-https://emailing.sanblasreservaambiental.org/mailing/emails/intern_email_2.0_es.html?modalidad=inside#reserve
+https://emailing.sanblasreservaambiental.org/hotel/es/?modalidad=inside#reserve
 
 Punto de encuentro: Mostrador de la Reserva Ambiental, en la planta 2 del hotel.
 
@@ -68,7 +68,7 @@ Barceló Experiences · La visita completa: https://www.barcelo.com/guia-turismo
 
 Barceló Experiences · La opción cómoda: https://www.barcelo.com/guia-turismo/es/espana/tenerife/actividades/104/
 
-https://emailing.sanblasreservaambiental.org/mailing/emails/intern_email_2.0_es.html
+https://emailing.sanblasreservaambiental.org/hotel/es/
 
 tenerife.ambiental-res@barcelo.com · +34 922 097 040
 
