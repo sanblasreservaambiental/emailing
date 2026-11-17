@@ -117,22 +117,38 @@ h1,h2,h3,h4{
 
 .stats-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:20px;
-    margin-top:40px;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
 }
 
 .stat{
     background:white;
-    border-radius:14px;
-    padding:30px;
+    padding:35px;
+    border-radius:18px;
     text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    transition:.3s ease;
+}
+
+.stat:hover{
+    transform:translateY(-5px);
+}
+
+.icon{
+    font-size:3rem;
+    margin-bottom:15px;
 }
 
 .stat-number{
     font-size:3rem;
-    color:var(--primary);
-    font-weight:700;
+    font-weight:900;
+    color:#1f4d4a;
+    font-family:'K2D',sans-serif;
+}
+
+.stat h4{
+    margin:15px 0 10px;
+    color:#1f4d4a;
 }
 
 .recommendations{
@@ -274,30 +290,43 @@ Un recorrido interpretado por guías especializados que transforma el paisaje en
 
 <div class="container">
 
-<h2 style="text-align:center;">
+<h2 style="text-align:center;margin-bottom:20px;">
 Información práctica
 </h2>
+
+<p style="text-align:center;max-width:700px;margin:0 auto 50px;">
+Una experiencia guiada para descubrir la historia natural y humana de
+San Blas a través de un recorrido accesible para la mayoría de visitantes.
+</p>
 
 <div class="stats-grid">
 
 <div class="stat">
-<div class="stat-number">2500</div>
-<p>metros de recorrido</p>
+    <div class="icon">🥾</div>
+    <div class="stat-number">2500</div>
+    <h4>Metros de recorrido</h4>
+    <p>Senderos y espacios interpretativos.</p>
 </div>
 
 <div class="stat">
-<div class="stat-number">60</div>
-<p>metros de desnivel</p>
+    <div class="icon">⛰️</div>
+    <div class="stat-number">60</div>
+    <h4>Metros de desnivel</h4>
+    <p>Una ruta cómoda y accesible.</p>
 </div>
 
 <div class="stat">
-<div class="stat-number">180</div>
-<p>minutos de duración</p>
+    <div class="icon">🕒</div>
+    <div class="stat-number">180</div>
+    <h4>Minutos</h4>
+    <p>Visita completa con guía especializado.</p>
 </div>
 
 <div class="stat">
-<div class="stat-number">1800</div>
-<p>años de historia interpretada</p>
+    <div class="icon">📜</div>
+    <div class="stat-number">1800</div>
+    <h4>Años de historia</h4>
+    <p>Patrimonio, cultura y territorio.</p>
 </div>
 
 </div>
